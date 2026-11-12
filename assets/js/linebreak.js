@@ -66,7 +66,7 @@ const proc = new HTMLProcessor(phraser, { className: "bx", separator: document.c
 // ・「受付 9:50」「北千住 8:28」「16:00 終了予定」「6番のりば 発」の空白 → 改行しない空白（U+00A0）
 // ・「」を」「）の」のような、かっこ閉じのあとの助詞、「19日（金）」の曜日の前 → 改行しない印（U+2060）
 // ・iPhoneのSafariとLINEは、keep-all のとき、かっこの前後・記号のあとで改行してしまい、改行しない印（U+2060）も効かない。
-//   そこで「（2」「）で」「19日（金）」「8:28」「2028.3.19」「1,260」「6〜8」「2-1」「OB・OG」を <nobr> で包んで、途中で切れないようにする
+//   そこで「（2」「）で」「）。」「19日（金）」「8:28」「2028.3.19」「1,260」「6〜8」「2-1」「OB・OG」を <nobr> で包んで、途中で切れないようにする
 //   （<span> だと「.facts dd span」などの見た目が付いてしまうので、どの見た目にも当たらない <nobr> を使う）
 const SKIP = "script,style,noscript,textarea,input,select,option,code,pre";
 const OPENS = "（「『【〔［｛〈《";
@@ -78,7 +78,7 @@ const NUM = new RegExp([
   "\\d+[〜~\\-－]\\d+",
   "[A-Za-z0-9]+・[A-Za-z0-9]+",
   "[" + OPENS + "]\\u2060?[^\\s\\u2060]",
-  "[）」』】〕]\\u2060?[\\u3041-\\u309F]",
+  "[）」』】〕]\\u2060?[\\u3041-\\u309F、。，．！？]",
 ].join("|"), "g");
 function glue(root) {
   const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -141,7 +141,23 @@ function markBlocks(root) {
   }
 }
 
+// チェックの行やリンクの行など、flex・grid の中に直接ある文字は <lb-t> で包む。
+// flex の中では、<wbr> で分かれた文字がそれぞれ別の並びになり、字のあいだにすき間が出るため、包んで1つにしてから <wbr> を入れる
+// （包まないと文節で改行できず、「上映し／ます」のように字の途中で折り返していた）
+function wrapFlexText(root) {
+  for (const el of [root, ...root.querySelectorAll("*")]) {
+    if (el.tagName === "BUTTON" || el.closest(SKIP) || !isFlexOrGrid(el)) continue;
+    for (const c of [...el.childNodes]) {
+      if (c.nodeType !== 3 || !JA.test(c.data)) continue;
+      const w = document.createElement("lb-t");
+      c.replaceWith(w);
+      w.appendChild(c);
+    }
+  }
+}
+
 function apply(el) {
+  wrapFlexText(el);
   glue(el);
   proc.applyToElement(el);
   // ボタンなど flex・grid の中に直接ある文字は、<wbr> で分けると字のあいだにすき間が出るので、入れたものを外す

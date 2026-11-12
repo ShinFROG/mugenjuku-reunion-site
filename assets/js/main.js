@@ -135,7 +135,7 @@
   }
   function greet() {
     var ki = parseInt(params.get("ki"), 10), g = $("#kiGreet");
-    if (g && ki >= 1 && ki <= 40) { g.textContent = "第" + ki + "期のみなさん、おひさしぶりです。"; g.hidden = false; }
+    if (g && ki >= 1 && ki <= 40) { g.textContent = "第" + ki + "期のみなさん、おひさしぶりです"; g.hidden = false; }
   }
 
   // ---------- 「やってほしいこと」募集（いまの主題） ----------
@@ -154,7 +154,7 @@
       if (act) act.innerHTML = '<a class="btn btn-white ideas-btn" href="' + esc(f.url) + '" target="_blank" rel="noopener">「やってほしいこと」を送る</a>';
     } else if (st === "after") {
       if (state) state.textContent = "募集は終わりました";
-      if (lead) lead.textContent = "たくさんの声をありがとうございました。いただいた声をもとに、実行委員会で準備を進めています。";
+      if (lead) lead.textContent = "たくさんの声をありがとうございました。いただいた声をもとに準備を進めています";
       if (act) act.innerHTML = "";
     } else {
       if (state) state.textContent = "まもなく募集します";
@@ -203,16 +203,16 @@
     var ideas = forms.ideas, rsvp = forms.rsvp;
     var si = formState(ideas), sr = formState(rsvp), h = "";
     if (sr === "open") {
-      h = "<b>出欠を受付中です</b><span>締切は" + jpDateW(rsvp.to) + "です。</span>" + formButton(rsvp.url, "出欠を回答する");
+      h = "<b>出欠を受付中です</b><span>締切は" + jpDateW(rsvp.to) + "です</span>" + formButton(rsvp.url, "出欠を回答する");
     } else if (sr === "prep") {
-      h = "<b>出欠の受付をまもなく始めます</b><span>出欠フォームは準備中です。締切は" + jpDateW(rsvp.to) + "の予定です。</span>";
+      h = "<b>出欠の受付をまもなく始めます</b><span>出欠フォームは準備中です。締切は" + jpDateW(rsvp.to) + "の予定です</span>";
     } else if (sr === "after") {
-      h = "<b>出欠の受付は締め切りました</b><span>たくさんのご回答、ありがとうございました。</span>";
+      h = "<b>出欠の受付は締め切りました</b><span>たくさんのご回答、ありがとうございました</span>";
     } else if (rsvp) {
-      h = "<b>出欠の受付は" + ymJP(rsvp.from) + "ごろから</b><span>締切は" + jpDateW(rsvp.to) + "の予定です。</span>";
-      if (si === "before") h += "<span>その前に、" + ymJP(ideas.from) + "から" + dueJP(ideas.to) + "まで「やってほしいこと」を募集します。</span>";
-      else if (si === "open") h += "<span>いま「やってほしいこと」を募集しています（" + dueJP(ideas.to) + "まで）。</span>" + formButton(ideas.url, "「やってほしいこと」を送る");
-      else if (si === "after") h += "<span>「やってほしいこと」の募集は終わりました。ありがとうございました。</span>";
+      h = "<b>出欠の受付は" + ymJP(rsvp.from) + "ごろから</b><span>締切は" + jpDateW(rsvp.to) + "の予定です</span>";
+      if (si === "before") h += "<span>その前に、" + ymJP(ideas.from) + "から" + dueJP(ideas.to) + "まで「やってほしいこと」を募集します</span>";
+      else if (si === "open") h += "<span>いま「やってほしいこと」を募集しています（" + dueJP(ideas.to) + "まで）</span>" + formButton(ideas.url, "「やってほしいこと」を送る");
+      else if (si === "after") h += "<span>「やってほしいこと」の募集は終わりました。ありがとうございました</span>";
     }
     if (h) dd.innerHTML = h;
   }
@@ -221,7 +221,7 @@
   function buildNews() {
     var ul = $("#newsList"); if (!ul) return;
     var items = (S.news || []).filter(function (n) { return n.date <= TODAY; });
-    if (!items.length) { ul.innerHTML = "<li>まだお知らせはありません。</li>"; return; }
+    if (!items.length) { ul.innerHTML = "<li>まだお知らせはありません</li>"; return; }
     ul.innerHTML = items.map(function (n) {
       var age = daysBetween(n.date, TODAY);
       return '<li><time datetime="' + esc(n.date) + '">' + esc(n.date.replace(/-/g, ".")) + "</time>" +
@@ -358,7 +358,7 @@
     show(phase.key === "after" || (phase.key === "today" && nowTime() >= "15:30") ? "back" : "go");
     var src = $("#ttSrc");
     if (src) {
-      src.innerHTML = "時刻は" + esc(T.checked) + "に確かめた日曜・祝日のダイヤです。開催の2か月前（" + esc(T.next) + "）に、最新の時刻へ更新します。出典：" +
+      src.innerHTML = "時刻は" + esc(T.checked) + "に確かめた日曜・祝日のダイヤです。開催2か月前（" + esc(T.next) + "）に最新の時刻へ更新します。出典：" +
         (T.sources || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.name) + "</a>"; }).join("、");
     }
   }
@@ -378,7 +378,7 @@
       return x.url ? '<a class="hotel reveal" href="' + esc(x.url) + '" target="_blank" rel="noopener">' + inner + "</a>" : '<div class="hotel reveal">' + inner + "</div>";
     }).join("");
     var src = $("#hotelsSrc");
-    if (src && S.hotelsChecked) src.textContent = "駅からの時間は、各ホテルの公式サイトの記載です（" + S.hotelsChecked + "に確認）。";
+    if (src && S.hotelsChecked) src.textContent = "駅からの時間は各ホテルの公式サイトの記載です（" + S.hotelsChecked + "に確認）";
     wrap.hidden = false;
     var fh = $("#faqHotels"); if (fh) fh.hidden = false;
   }
@@ -483,9 +483,9 @@
     });
   }
   function inviteText() {
-    var lines = ["【第5回 無絃塾同窓会】", "2028年3月19日（日）、筑波大学（未来社会デザイン棟・開学記念館）で開きます。"];
-    if (phase.key === "ideas" && forms.ideas) lines.push("いま「やってほしいこと」を募集しています（" + dueJP(forms.ideas.to) + "まで）。");
-    if (phase.key === "rsvp" && forms.rsvp) lines.push("出欠を受付中です（" + jpDate(forms.rsvp.to) + "まで）。");
+    var lines = ["【第5回 無絃塾同窓会】", "2028年3月19日（日）、筑波大学（未来社会デザイン棟・開学記念館）で開きます"];
+    if (phase.key === "ideas" && forms.ideas) lines.push("いま「やってほしいこと」を募集しています（" + dueJP(forms.ideas.to) + "まで）");
+    if (phase.key === "rsvp" && forms.rsvp) lines.push("出欠を受付中です（" + jpDate(forms.rsvp.to) + "まで）");
     lines.push("くわしくはこちら：" + S.url);
     return lines.join("\n");
   }
@@ -506,7 +506,7 @@
     var btn = $("#copyMsg"), note = $("#copyNote"); if (!btn) return;
     btn.addEventListener("click", function () {
       function done(ok) {
-        if (note) note.textContent = ok ? "コピーしました。LINEやメールに貼りつけてください。" : "コピーできませんでした。このページのURLを送ってください。";
+        if (note) note.textContent = ok ? "コピーしました。LINEやメールに貼りつけてください" : "コピーできませんでした。このページのURLを送ってください";
       }
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(msg).then(function () { done(true); }, function () { done(fallbackCopy(msg)); });
       else done(fallbackCopy(msg));

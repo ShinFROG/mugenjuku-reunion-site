@@ -602,3 +602,7 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 /* スクロールを軽くする：トップの写真は別の層で動かし、画面の外に出た写真・花びら・流れる帯は止める（main.js の pauseOffscreen） */
 .hero-photo{will-change:transform}
 .anim-off .hero-photo,.anim-off .petal,.anim-off .band-track{animation-play-state:paused}
+
+/* 最後の行に1〜2字だけ残る改行を減らす（対応するブラウザだけ。見出しは行の長さをそろえる） */
+p,dd,li,figcaption,summary{text-wrap:pretty}
+h1,h2,h3{text-wrap:balance}

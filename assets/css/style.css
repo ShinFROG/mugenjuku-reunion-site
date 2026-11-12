@@ -625,3 +625,6 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 .pv-play:disabled{opacity:.65;cursor:wait}
 .pv-play:disabled:hover{transform:none}
 .pv-note{font-size:13px;color:var(--sub);margin-top:10px}
+
+/* 開催概要の日付は大きく */
+.facts dd b.fact-date{font-size:clamp(26px,3.2vw,36px);line-height:1.3;letter-spacing:.02em;margin-bottom:6px}

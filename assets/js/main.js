@@ -52,6 +52,13 @@
   var phase = phases.filter(function (p) { return TODAY >= p.from && TODAY <= p.to; })[0] || phases[0] || { key: "soon", cta: {} };
   var places = S.places || {};
   var forms = S.forms || {};
+  // 出欠フォームのURLがまだ入っていないあいだは、トップに「受付中」と出さない（data.js の phases の prep を使う）
+  if (phase.prep && phase.cta && phase.cta.form && formState(forms[phase.cta.form]) === "prep") {
+    var merged = {};
+    Object.keys(phase).forEach(function (k) { merged[k] = phase[k]; });
+    Object.keys(phase.prep).forEach(function (k) { merged[k] = phase.prep[k]; });
+    phase = merged;
+  }
 
   function mapUrl(q) { return "https://www.google.com/maps/search/?api=1&query=" + enc(q); }
   function walkUrl() {
@@ -82,7 +89,12 @@
       if (formState(f) === "open") { out.href = f.url; out.ext = true; }
       else { out.href = c.fallback || "#schedule"; if (c.fallbackText) out.text = out.short = c.fallbackText; }
     } else if (c.map) {
-      var key = (phase.key === "today" && nowTime() >= "12:50") ? "b" : c.map;
+      var t = nowTime(), key = c.map;
+      if (phase.key === "today" && t >= "16:00") {
+        // 終わったあと：二次会の場所（data.js の places.night）があればその地図、まだなければ帰りのバスの時刻
+        if (!places.night) { out.text = "帰りのバスの時刻"; out.short = "帰りのバス"; out.href = "#tt"; return out; }
+        key = "night";
+      } else if (phase.key === "today" && t >= "12:50") key = "b";
       var pl = places[key];
       if (pl) { out.href = mapUrl(pl.q); out.ext = true; out.text = "地図アプリで" + pl.name + "を開く"; out.short = "会場の地図"; }
     }
@@ -123,7 +135,7 @@
     var st = formState(f), late = ["rsvp", "final", "today", "after"].indexOf(phase.key) >= 0;
     if (late) { sec.hidden = true; return; }
     var state = $("#ideasState"), lead = $("#ideasLead"), period = $("#ideasPeriod"), act = $("#ideasAction");
-    if (period) period.textContent = ymJP(f.from) + "〜" + dueJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）";
+    if (period) period.innerHTML = '<span class="nw">' + ymJP(f.from) + '〜</span><span class="nw">' + dueJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）</span>";
     if (st === "before") {
       if (state) state.textContent = ymJP(f.from) + "から募集します";
       if (act) act.innerHTML = '<span class="btn ideas-btn is-off">受付は' + ymJP(f.from) + "から</span>";
@@ -434,18 +446,6 @@
     upd();
   }
 
-  // ---------- 期ごとの参加状況 ----------
-  function buildGens() {
-    var g = S.generations || [], box = $("#gensBox");
-    if (!box || !g.length) return;
-    var max = Math.max.apply(null, g.map(function (x) { return x.yes; })) || 1, total = 0;
-    g.forEach(function (x) { total += x.yes; });
-    box.innerHTML = '<p class="gens-total">いま <b>' + total + "</b> 人が参加の予定です（名前は出しません）。</p>" +
-      '<div class="gens-chart">' + g.map(function (x) {
-        return '<div class="g"><span class="n">' + x.yes + '</span><span class="bar" style="height:' + Math.max(6, Math.round(x.yes / max * 160)) + 'px"></span><span>' + esc(x.ki) + "期</span></div>";
-      }).join("") + "</div>";
-  }
-
   // ---------- これからの予定 ----------
   function buildRoad() {
     var items = $$("#road li"), nextMarked = false;
@@ -552,12 +552,15 @@
     Object.keys(map).forEach(function (id) { var s = doc.getElementById(id); if (s) io.observe(s); });
   }
   function floatCta() {
-    var fl = $("#floatCta"), hero = $(".hero"), foot = $(".foot");
+    var fl = $("#floatCta"), hero = $(".hero");
     if (!fl || !hero || !("IntersectionObserver" in window)) return;
-    var heroIn = true, footIn = false;
-    function upd() { fl.classList.toggle("show", !heroIn && !footIn); }
-    new IntersectionObserver(function (es) { heroIn = es[0].isIntersecting; upd(); }).observe(hero);
-    if (foot) new IntersectionObserver(function (es) { footIn = es[0].isIntersecting; upd(); }).observe(foot);
+    // トップ、ページの終わり、同じボタンがある欄（募集・開催概要の申込）が見えているあいだは隠して、ボタンが重ならないようにする
+    var els = [hero, $(".foot"), $("#ideasAction"), $("#factApply")].filter(function (e, i) { return e && (i < 2 || e.querySelector("a")); });
+    var vis = els.map(function (e) { return e === hero; });
+    function upd() { fl.classList.toggle("show", vis.indexOf(true) < 0); }
+    els.forEach(function (el, i) {
+      new IntersectionObserver(function (es) { vis[i] = es[es.length - 1].isIntersecting; upd(); }).observe(el);
+    });
   }
 
   // ---------- 動き ----------
@@ -632,7 +635,6 @@
   buildTimetable();
   buildWays();
   buildHotels();
-  buildGens();
   buildVideos();
   galleryButtons();
   buildLinks();

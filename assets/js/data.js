@@ -30,7 +30,10 @@ window.SITE = {
     { from: "2027-10-01", to: "2028-02-18", key: "rsvp", label: "出欠受付中",
       lead: "出欠の受付を始めました。締切は2028年2月18日（金）です。",
       cta: { text: "出欠を回答する", short: "出欠を回答", form: "rsvp", fallback: "#about", fallbackText: "出欠の受付について" },
-      band: ["出欠受付中", "締切 2028.2.18（金）", "同じ期の人にも回してください", "2028.3.19 SUN"] },
+      band: ["出欠受付中", "締切 2028.2.18（金）", "同じ期の人にも回してください", "2028.3.19 SUN"],
+      // 出欠フォームのURL（forms.rsvp.url）がまだ空のあいだは、こちらを出す
+      prep: { label: "まもなく出欠受付", lead: "出欠の受付をまもなく始めます。締切は2028年2月18日（金）の予定です。",
+        band: ["まもなく出欠受付", "締切 2028.2.18（金）の予定", "同じ期の人にも回してください", "2028.3.19 SUN"] } },
     { from: "2028-02-19", to: "2028-03-18", key: "final", label: "まもなく",
       lead: "まもなく当日です。行き方と持ち物をもう一度ご確認ください。",
       cta: { text: "行き方とバスの時刻", short: "行き方・バス", href: "#access" },
@@ -176,8 +179,5 @@ window.SITE = {
     { kind: "Instagram", title: "いまの無絃塾", sub: "筑波大学津軽三味線倶楽部無絃塾（@tsukuba_mugenjuku）", url: "https://www.instagram.com/tsukuba_mugenjuku/" },
     { kind: "YouTube", title: "無絃塾の動画", sub: "筑波大学津軽三味線倶楽部無絃塾のチャンネル", url: "https://www.youtube.com/@%E7%AD%91%E6%B3%A2%E5%A4%A7%E5%AD%A6%E7%84%A1%E7%B5%83%E5%A1%BE/videos" },
     { kind: "Webサイト", title: "喜楽座・喜幸会", sub: "無絃塾をご指導いただいている、民謡・津軽三味線の会", url: "https://www.kirakuza.net/kirakuzakikoukai" }
-  ],
-
-  // 期ごとの回答数（出欠の受付が始まったら入れる。例：{ ki: 15, yes: 4 }）
-  generations: []
+  ]
 };

@@ -575,8 +575,11 @@
   }
   function opening() {
     var op = $("#opening"); if (!op) return;
-    // 開くたびに毎回出す（動きを減らす設定の人と、?noanim・?noopen のときは出さない）
-    if (!params.has("opening") && (still || params.has("noopen"))) return;
+    // 開くたびに毎回出す（?noanim・?noopen のときは出さない）。
+    // スマホの「視差効果を減らす（動きを減らす）」の人には、封筒が開いたあとの姿を動かさずに見せて、ふっと消す
+    if (!params.has("opening") && (root.classList.contains("noanim") || params.has("noopen"))) return;
+    var calm = reduce;
+    if (calm) op.classList.add("calm", "go");
     op.hidden = false;
     root.classList.add("opening-on");
     var closed = false;
@@ -587,8 +590,8 @@
       root.classList.remove("opening-on");
       setTimeout(function () { op.hidden = true; }, 550);
     }
-    setTimeout(function () { op.classList.add("go"); }, 300);
-    setTimeout(close, 2700);
+    if (!calm) setTimeout(function () { op.classList.add("go"); }, 300);
+    setTimeout(close, calm ? 2200 : 2700);
     op.addEventListener("click", close);
     doc.addEventListener("keydown", function k() { doc.removeEventListener("keydown", k); close(); });
   }

@@ -603,3 +603,7 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 
 /* 募集の欄：中の1つが長くても、欄ごと画面の外へ広がらないようにする（iPhoneとLINEで見切れたため） */
 .ideas-facts dd{min-width:0}
+
+/* オープニング：「視差効果を減らす」の人向け。開いた封筒をそのまま見せる（中は動かさず、消えるときだけ、ふっと薄くなる） */
+.opening.calm *{animation:none!important;transition:none!important}
+.opening.calm .strings path{stroke-dashoffset:0}

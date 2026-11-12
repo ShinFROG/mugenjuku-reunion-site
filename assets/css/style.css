@@ -619,3 +619,9 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 /* 帯は外枠で切り、ページが横にずれないようにする */
 .band-wrap{overflow:hidden;padding:14px 0;margin-top:8px}
 .band-wrap .band{margin-top:0}
+
+/* 新歓PVの「音ありで再生」ボタン（動画の右） */
+.pv-play{font-size:17px;padding:14px 26px}
+.pv-play:disabled{opacity:.65;cursor:wait}
+.pv-play:disabled:hover{transform:none}
+.pv-note{font-size:13px;color:var(--sub);margin-top:10px}

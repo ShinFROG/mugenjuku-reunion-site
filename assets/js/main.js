@@ -354,19 +354,44 @@
   }
 
   // ---------- 無絃塾のYouTube ----------
-  // トップの写真の下に2026新歓PVを置く。自動では流さず、▶を押したら音ありで最初から流れる
+  // トップの写真の下に2026新歓PVを置く。自動では流さず、右の「音ありで再生」で最初から音ありで流す
   function pvVideo() {
     var Y = S.youtube || {}, V = Y.hero, holder = $("#pvPlayer");
-    var yt = $("#pvYt");
+    var yt = $("#pvYt"), btn = $("#pvPlay"), note = $("#pvNote");
     if (yt && V && V.id) yt.href = "https://www.youtube.com/watch?v=" + V.id;
     if (!V || !V.id || !holder) return;
-    var f = doc.createElement("iframe");
-    f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(V.id) + "?rel=0&playsinline=1";
-    f.title = "無絃塾 " + (V.title || "動画");
-    f.loading = "lazy";
-    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-    f.allowFullscreen = true;
-    holder.replaceWith(f);
+    var player = null, ready = false, state = -1, wantPlay = false;
+    function label() { if (btn) btn.textContent = state === 1 ? "⏸ 一時停止" : "▶ 音ありで再生"; }
+    function play() {
+      player.unMute();
+      player.setVolume(100);
+      if (state !== 2) player.seekTo(0, true); // まだ流していない・終わったときは最初から。止めたところからは続きから
+      player.playVideo();
+      setTimeout(function () { if (state !== 1 && note) note.hidden = false; }, 1500);
+    }
+    window.onYouTubeIframeAPIReady = function () {
+      player = new YT.Player("pvPlayer", {
+        host: "https://www.youtube-nocookie.com",
+        videoId: V.id,
+        playerVars: { autoplay: 0, controls: 1, rel: 0, playsinline: 1, iv_load_policy: 3, modestbranding: 1 },
+        events: {
+          onReady: function () { ready = true; if (btn) btn.disabled = false; if (wantPlay) play(); },
+          onStateChange: function (e) {
+            state = e.data;
+            label();
+            if (state === 1 && note) note.hidden = true;
+          }
+        }
+      });
+    };
+    var s = doc.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    s.async = true;
+    doc.head.appendChild(s);
+    if (btn) btn.addEventListener("click", function () {
+      if (!ready) { wantPlay = true; return; }
+      if (state === 1) player.pauseVideo(); else play();
+    });
   }
   function buildVideos() {
     var Y = S.youtube || {}, box = $("#vids"), sec = $("#videos");

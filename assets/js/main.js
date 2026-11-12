@@ -354,68 +354,19 @@
   }
 
   // ---------- 無絃塾のYouTube ----------
-  // トップの写真の下で2026新歓PVを流す。見える位置に来たら、まず音ありで流す。
-  // ブラウザに止められたら音なしで流し、最初のタップで音を出す
+  // トップの写真の下に2026新歓PVを置く。自動では流さず、▶を押したら音ありで最初から流れる
   function pvVideo() {
-    var Y = S.youtube || {}, V = Y.hero, holder = $("#pvPlayer"), sec = $("#pv");
+    var Y = S.youtube || {}, V = Y.hero, holder = $("#pvPlayer");
     var yt = $("#pvYt");
     if (yt && V && V.id) yt.href = "https://www.youtube.com/watch?v=" + V.id;
-    if (!V || !V.id || !holder || !sec) return;
-    var btn = $("#pvSound"), player = null, ready = false, started = false, playing = false;
-    var muted = false, userMuted = false, userPaused = false, inView = false, auto = !still;
-    function setBtn() { if (btn) { btn.hidden = !muted; btn.classList.toggle("pulse", muted); } }
-    function syncMute() { if (player && player.isMuted) { muted = player.isMuted(); setBtn(); } }
-    function soundOn() {
-      if (!player || !player.unMute) return;
-      player.unMute(); player.setVolume(80); player.playVideo();
-      muted = false; setBtn();
-      setTimeout(syncMute, 600);
-    }
-    function tryStart() {
-      if (!auto || !ready || !inView || started) return;
-      started = true;
-      player.unMute(); player.setVolume(80); player.playVideo();
-      setTimeout(function () {
-        if (!playing) { player.mute(); player.playVideo(); }
-        syncMute();
-      }, 1500);
-    }
-    window.onYouTubeIframeAPIReady = function () {
-      player = new YT.Player("pvPlayer", {
-        host: "https://www.youtube-nocookie.com",
-        videoId: V.id,
-        playerVars: { autoplay: 0, mute: 0, controls: 1, loop: 1, playlist: V.id, playsinline: 1, rel: 0, iv_load_policy: 3, modestbranding: 1 },
-        events: {
-          onReady: function () { ready = true; tryStart(); },
-          onStateChange: function (e) {
-            if (e.data === 1) { playing = true; userPaused = false; syncMute(); }
-            if (e.data === 2 && inView && playing) userPaused = true;
-          }
-        }
-      });
-    };
-    var s = doc.createElement("script");
-    s.src = "https://www.youtube.com/iframe_api";
-    s.async = true;
-    doc.head.appendChild(s);
-    if (btn) btn.addEventListener("click", function () { userMuted = false; soundOn(); });
-    function firstGesture(e) {
-      if (e.target && e.target.closest && e.target.closest("#pvSound")) return;
-      if (!player || !playing || userMuted || !inView) return;
-      doc.removeEventListener("click", firstGesture, true);
-      doc.removeEventListener("keydown", firstGesture, true);
-      if (muted) soundOn();
-    }
-    doc.addEventListener("click", firstGesture, true);
-    doc.addEventListener("keydown", firstGesture, true);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) {
-        inView = es[0].isIntersecting;
-        if (!started) { tryStart(); return; }
-        if (!player || !player.playVideo || !playing) return;
-        if (inView) { if (!userPaused) player.playVideo(); } else player.pauseVideo();
-      }, { threshold: 0.35 }).observe(sec);
-    }
+    if (!V || !V.id || !holder) return;
+    var f = doc.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(V.id) + "?rel=0&playsinline=1";
+    f.title = "無絃塾 " + (V.title || "動画");
+    f.loading = "lazy";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    holder.replaceWith(f);
   }
   function buildVideos() {
     var Y = S.youtube || {}, box = $("#vids"), sec = $("#videos");

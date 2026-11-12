@@ -37,7 +37,7 @@ section{position:relative}
 .env-front{position:absolute;inset:0;z-index:2;border-radius:10px;background:linear-gradient(to top right,#D94A36 49.6%,transparent 50%) left/50.2% 100% no-repeat,linear-gradient(to top left,#D94A36 49.6%,transparent 50%) right/50.2% 100% no-repeat,linear-gradient(to top,#CF432F 0%,#CF432F 52%,transparent 52%)}
 .env-flap{position:absolute;left:0;right:0;top:0;height:58%;z-index:3;transform-origin:top center;background:linear-gradient(to bottom right,#E85A45 49.6%,transparent 50%) left/50.2% 100% no-repeat,linear-gradient(to bottom left,#E85A45 49.6%,transparent 50%) right/50.2% 100% no-repeat;transition:transform .6s ease .35s,z-index 0s .65s}
 .env-seal{position:absolute;left:50%;top:50%;z-index:4;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#F1C878,#B8862F);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.25);transition:transform .35s ease,opacity .35s ease}
-.env-seal span{color:#7A2B1E;font-size:28px;font-weight:700;line-height:1}
+.env-seal svg{width:54px;height:54px;display:block}
 .opening.go .env-seal{transform:scale(1.25);opacity:0}
 .opening.go .env-flap{transform:rotateX(180deg);z-index:0}
 .opening.go .env-letter{transform:translateY(-34%)}
@@ -379,13 +379,6 @@ section{position:relative}
 .noanim .brush .ln:nth-child(2)::after{animation:none!important;transform:scaleX(1)!important}
 .noanim .hero-strings path{animation:none!important;stroke-dashoffset:0!important}
 .noanim .band-track{animation:none!important}
-@media (prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
-  .hero-photo,.band-track{animation:none}
-  .brush .ln{animation:none;clip-path:none}
-  .petals{display:none}
-  html{scroll-behavior:auto}
-}
 
 /* タブレット */
 @media (max-width:980px){

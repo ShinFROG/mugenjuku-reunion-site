@@ -44,9 +44,9 @@
   var TODAY = qDate || jstNow().date;
   function nowTime() { return qTime || jstNow().time; }
 
-  var reduce = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
   if (params.has("noanim")) root.classList.add("noanim");
-  var still = reduce || root.classList.contains("noanim");
+  // 動きは、スマホの「視差効果を減らす」がオンでも止めない（2026-11-13の本人の希望）。止めるのは ?noanim のときだけ
+  var still = root.classList.contains("noanim");
 
   var phases = S.phases || [];
   var phase = phases.filter(function (p) { return TODAY >= p.from && TODAY <= p.to; })[0] || phases[0] || { key: "soon", cta: {} };

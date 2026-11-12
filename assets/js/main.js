@@ -572,10 +572,8 @@
   }
   function opening() {
     var op = $("#opening"); if (!op) return;
-    var force = params.has("opening"), seen = false;
-    try { seen = localStorage.getItem("mg5-opening") === "1"; } catch (e) { seen = true; }
-    if (!force && (still || seen || params.has("noopen"))) return;
-    try { localStorage.setItem("mg5-opening", "1"); } catch (e) {}
+    // 開くたびに毎回出す（動きを減らす設定の人と、?noanim・?noopen のときは出さない）
+    if (!params.has("opening") && (still || params.has("noopen"))) return;
     op.hidden = false;
     root.classList.add("opening-on");
     var closed = false;

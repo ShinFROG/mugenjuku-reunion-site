@@ -247,7 +247,8 @@ section{position:relative}
 @media (max-width:640px){
   .sp{display:inline}
   body{font-size:15px}
-  .hero{margin-top:10px;border-radius:26px;height:76vh;min-height:500px}
+  .hero{margin-top:10px;border-radius:26px;height:min(76vh,640px);min-height:500px}
+  .hero h1{font-size:clamp(32px,10.4vw,46px)}
   .hero-sub .sep{display:none}
   .hero-btns .btn{width:100%}
   .scroll-hint{display:none}

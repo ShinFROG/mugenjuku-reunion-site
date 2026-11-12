@@ -633,3 +633,4 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 .cal-note{flex-direction:column;align-items:flex-start;gap:4px}
 .cal-key{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 @media (max-width:640px){.history b{font-size:14px;white-space:nowrap;letter-spacing:-.01em}}
+.facts dd span a{color:var(--red);font-weight:700}

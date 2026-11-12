@@ -10,7 +10,7 @@ window.SITE = {
   forms: {
     ideas: { name: "「やってほしいこと」募集", url: "https://docs.google.com/forms/d/e/1FAIpQLSfuJ7CBaJamvw72LrWk4refsydXXX2jkn7hqdYQ8x5TvAtUEg/viewform", from: "2026-11-12", to: "2027-03-19" },
     rsvp: { name: "出欠の回答", url: "", from: "2027-10-01", to: "2028-02-18" }, // ④ 出欠フォーム（2027年10月ごろに作る）
-    contact: { name: "お問い合わせ", url: "" } // 作ったら入れる（いまは第一報のメールへの返信で受けている）
+    contact: { name: "お問い合わせ", url: "https://forms.gle/5fXJWWJ5fakdR5dW9" } // お問い合わせフォーム（第5回）。回答はoniのフォームに届く
   },
 
   // 時期ごとにトップの表示とボタンを変える

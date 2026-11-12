@@ -576,10 +576,8 @@
   function opening() {
     var op = $("#opening"); if (!op) return;
     // 開くたびに毎回出す（?noanim・?noopen のときは出さない）。
-    // スマホの「視差効果を減らす（動きを減らす）」の人には、封筒が開いたあとの姿を動かさずに見せて、ふっと消す
+    // スマホの「視差効果を減らす」がオンの人にも、同じ動きで見せる（3秒以内に終わり、タップで飛ばせるため。2026-11-13の本人の希望）
     if (!params.has("opening") && (root.classList.contains("noanim") || params.has("noopen"))) return;
-    var calm = reduce;
-    if (calm) op.classList.add("calm", "go");
     op.hidden = false;
     root.classList.add("opening-on");
     var closed = false;
@@ -590,8 +588,8 @@
       root.classList.remove("opening-on");
       setTimeout(function () { op.hidden = true; }, 550);
     }
-    if (!calm) setTimeout(function () { op.classList.add("go"); }, 300);
-    setTimeout(close, calm ? 2200 : 2700);
+    setTimeout(function () { op.classList.add("go"); }, 300);
+    setTimeout(close, 2700);
     op.addEventListener("click", close);
     doc.addEventListener("keydown", function k() { doc.removeEventListener("keydown", k); close(); });
   }

@@ -271,20 +271,38 @@
     tabs.innerHTML = M.map(function (x, i) {
       return '<button type="button" role="tab" data-i="' + i + '">' + esc(x.tab) + "</button>";
     }).join("");
+    var loaded = false, cur = 0;
     function show(i) {
+      cur = i;
       $$("button", tabs).forEach(function (b) {
         var on = +b.getAttribute("data-i") === i;
         b.classList.toggle("on", on);
         b.setAttribute("aria-selected", on ? "true" : "false");
       });
-      frame.src = M[i].src;
+      if (loaded) frame.src = M[i].src;
       if (cap) cap.textContent = M[i].cap;
+    }
+    // 地図は、スクロールの途中で読み込むと画面が引っかかるので、先に読み込んでおく：
+    // 開いて約4秒後（トップを見ているあいだ）か、地図まで1500pxに近づいたときの、早いほう
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      frame.loading = "eager";
+      frame.src = M[cur].src;
     }
     tabs.addEventListener("click", function (e) {
       var b = e.target.closest("button[data-i]");
-      if (b) show(+b.getAttribute("data-i"));
+      if (b) { show(+b.getAttribute("data-i")); load(); }
     });
     show(0);
+    function later() { setTimeout(load, 3500); }
+    if (doc.readyState === "complete") later(); else addEventListener("load", later);
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[es.length - 1].isIntersecting) { io.disconnect(); load(); }
+      }, { rootMargin: "1500px 0px" });
+      io.observe(frame);
+    }
   }
   function buildTimetable() {
     var T = S.transit, tabs = $("#ttTabs"), body = $("#ttBody");
@@ -545,7 +563,7 @@
     els.forEach(function (e) {
       var sib = Array.prototype.filter.call(e.parentNode.children, function (x) { return x.classList.contains("reveal"); });
       var i = sib.indexOf(e);
-      if (i > 0) e.style.transitionDelay = Math.min(i, 4) * 70 + "ms";
+      if (i > 0) e.style.transitionDelay = Math.min(i, 3) * 50 + "ms";
     });
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -562,6 +580,13 @@
       });
     }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
     els.forEach(function (e) { io.observe(e); });
+  }
+  // 画面の外に出たトップの写真・花びら・流れる帯のアニメーションは止めて、スクロールを軽くする
+  function pauseOffscreen() {
+    if (!("IntersectionObserver" in window)) return;
+    $$(".hero, .band-wrap").forEach(function (el) {
+      new IntersectionObserver(function (es) { el.classList.toggle("anim-off", !es[es.length - 1].isIntersecting); }).observe(el);
+    });
   }
   function petals() {
     var box = $("#petals"); if (!box || still) return;
@@ -620,6 +645,7 @@
   nav();
   floatCta();
   petals();
+  pauseOffscreen();
   pvVideo();
   reveal();
   opening();

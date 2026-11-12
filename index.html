@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261112">
+<link rel="stylesheet" href="assets/css/style.css?v=20261112b">
 </head>
 <body>
 
@@ -63,6 +63,7 @@
   <!-- 01 トップ -->
   <section class="hero" aria-label="第5回 無絃塾同窓会">
     <div class="hero-photo" role="img" aria-label="桜の舞台での卒業公演（遠景）"></div>
+    <div class="hero-video" id="heroVideo" aria-hidden="true"><div id="heroPlayer"></div></div>
     <div class="hero-shade"></div>
     <div class="petals" id="petals" aria-hidden="true"></div>
     <div class="hero-badge" id="heroBadge"><small>当日まで</small><b id="heroDays">493</b><small>日</small></div>
@@ -78,11 +79,37 @@
         <a class="btn btn-glass" href="#access">アクセスとバスの時刻</a>
       </div>
     </div>
+    <div class="hero-vctl" id="heroVctl" hidden>
+      <span class="hero-vcap">いまの無絃塾：2026新歓PV</span>
+      <button type="button" id="heroSound" aria-pressed="false">音を出す</button>
+      <a id="heroYt" href="#" target="_blank" rel="noopener">YouTubeで見る ↗</a>
+    </div>
     <svg class="hero-strings" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 L1200 18"/><path d="M0 30 L1200 30"/><path d="M0 42 L1200 42"/></svg>
   </section>
 
   <!-- 02 流れる帯 -->
   <div class="band" aria-hidden="true"><div class="band-track" id="band"></div></div>
+
+  <!-- 02b 「やってほしいこと」募集（いまの主題） -->
+  <section class="wrap sec-tight" id="ideas">
+    <div class="ideas reveal">
+      <div class="ideas-main">
+        <p class="ideas-k" id="ideasState">2027年1月から募集します</p>
+        <h2 class="ideas-h"><span class="ib">「やってほしいこと」</span><span class="ib">募集</span></h2>
+        <p class="ideas-lead" id="ideasLead">第5回は、みなさんの「やってほしい」でつくります。一緒に弾きたい曲、見たい映像、やってみたい企画、手伝えることなど、何でも教えてください。いただいた声をもとに、1年かけて準備します。</p>
+        <ul class="ideas-chips"><li>一緒に弾きたい曲</li><li>見たい映像</li><li>やってみたい企画</li><li>手伝えること</li></ul>
+      </div>
+      <div class="ideas-side">
+        <dl class="ideas-facts">
+          <div><dt>受付</dt><dd id="ideasPeriod">2027年1月〜3月19日（金）</dd></div>
+          <div><dt>かかる時間</dt><dd>3分ほど</dd></div>
+          <div><dt>答え方</dt><dd>Googleフォーム</dd></div>
+        </dl>
+        <div id="ideasAction"><span class="btn ideas-btn is-off">受付は2027年1月から</span></div>
+        <p class="ideas-note">締切はちょうど開催の1年前です。</p>
+      </div>
+    </div>
+  </section>
 
   <!-- 03 開催概要 -->
   <section class="wrap sec" id="about">
@@ -164,18 +191,20 @@
         <div class="role"><i>👏</i><b>聴く</b><p>客席で楽しむ</p></div>
         <div class="role"><i>🍻</i><b>二次会から</b><p>夜から合流（場所は調整中）</p></div>
       </div>
-      <h3 class="h3 h3-light reveal">演奏準備キット</h3>
-      <p class="lead lead-light reveal">曲ごとに、譜面・音源（ゆっくり版と本番テンポ）・手元や足元だけを写した動画・練習のポイントをまとめて公開します（2027年秋ごろ）。</p>
-      <div class="kits">
-        <article class="kit reveal"><span class="kit-no">01</span><h4>津軽じょんがら節</h4><ul><li>譜面</li><li>音源（ゆっくり／本番）</li><li>手元の動画</li><li>練習のポイント</li></ul><p class="kit-state">準備中</p></article>
-        <article class="kit reveal"><span class="kit-no">02</span><h4>踊り</h4><ul><li>振付の動画（足元・後ろ姿）</li><li>音源</li><li>覚えるコツ</li></ul><p class="kit-state">準備中</p></article>
-      </div>
       <div class="bring reveal">
         <b>弾く人の持ち物</b>
-        <ul><li>三味線</li><li>撥</li><li>駒</li><li>指すり</li><li>チューナー</li><li>譜面（キットから印刷）</li></ul>
-        <p>楽器の貸出と練習会の日程は、決まりしだいここでお知らせします。</p>
+        <ul><li>三味線</li><li>撥</li><li>駒</li><li>指すり</li><li>チューナー</li><li>譜面</li></ul>
       </div>
     </div>
+  </section>
+
+  <!-- 07b いまの無絃塾（動画） -->
+  <section class="wrap sec" id="videos">
+    <p class="kicker reveal">MUGENJUKU NOW</p>
+    <h2 class="h2 reveal">いまの無絃塾を動画で</h2>
+    <p class="lead reveal">現役生がYouTubeで発信しています。トップで流れているのは、2026年の新歓PVです。</p>
+    <div class="vids" id="vids"></div>
+    <p class="vids-more reveal"><a class="btn btn-small btn-line-o" id="ytChannel" href="#" target="_blank" rel="noopener">YouTubeチャンネルを見る ↗</a></p>
   </section>
 
   <!-- 08 アクセス -->
@@ -324,31 +353,35 @@
         <li class="reveal next"><span class="hn">第5回</span><b>2028年3月19日</b><p>未来社会デザイン棟と開学記念館で</p></li>
       </ol>
     </div>
-    <div class="gallery">
+    <div class="gallery-wrap">
+    <button type="button" class="gal-btn gal-prev" aria-label="前の写真へ">‹</button>
+    <div class="gallery" id="gallery">
+      <figure><img src="assets/img/hist_1995.jpg" alt="学祭ののぼり" loading="lazy"><figcaption><b>1995年</b>学祭</figcaption></figure>
+      <figure><img src="assets/img/hist_1996.jpg" alt="うしくかっぱ祭りの舞台（遠景）" loading="lazy"><figcaption><b>1996年7月</b>うしくかっぱ祭り</figcaption></figure>
+      <figure><img src="assets/img/hist_1997.jpg" alt="阿見町の芸能発表会の舞台（遠景）" loading="lazy"><figcaption><b>1997年</b>阿見町の芸能発表会</figcaption></figure>
+      <figure><img src="assets/img/hist_1998.jpg" alt="第2回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>1998年</b>第2回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/hist_1999.jpg" alt="四季の里音楽祭の野外ステージ（遠景）" loading="lazy"><figcaption><b>1999年</b>四季の里音楽祭</figcaption></figure>
+      <figure><img src="assets/img/hist_2000.jpg" alt="第4回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2000年</b>第4回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/hist_2001.jpg" alt="第5回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2001年</b>第5回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/hist_2002.jpg" alt="海ツアーの浜辺（遠景）" loading="lazy"><figcaption><b>2002年</b>海ツアー</figcaption></figure>
       <figure><img src="assets/img/stage_lights.jpg" alt="学祭のステージの照明" loading="lazy"><figcaption><b>2004年10月</b>学祭</figcaption></figure>
       <figure><img src="assets/img/stage_blue.jpg" alt="第7回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2005年2月</b>第7回卒業公演</figcaption></figure>
       <figure><img src="assets/img/stage_banners.jpg" alt="第7回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2005年2月</b>第7回卒業公演</figcaption></figure>
       <figure><img src="assets/img/sunset.jpg" alt="海ツアーで見た海" loading="lazy"><figcaption><b>2006年9月</b>海ツアー</figcaption></figure>
       <figure><img src="assets/img/dance_kids.jpg" alt="第9回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2007年1月</b>第9回卒業公演</figcaption></figure>
       <figure><img src="assets/img/ensemble_2006.jpg" alt="第9回卒業公演の大合奏（遠景）" loading="lazy"><figcaption><b>2007年1月</b>第9回卒業公演の大合奏</figcaption></figure>
+      <figure><img src="assets/img/hist_2008.jpg" alt="卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2008年1月</b>卒業公演</figcaption></figure>
       <figure><img src="assets/img/hero_sakura.jpg" alt="桜の舞台の卒業公演（遠景）" loading="lazy"><figcaption><b>2009年1月</b>卒業公演</figcaption></figure>
+      <figure><img src="assets/img/hist_2010.jpg" alt="宿祭の夜のステージ（遠景）" loading="lazy"><figcaption><b>2010年5月</b>宿祭</figcaption></figure>
+      <figure><img src="assets/img/hist_2011.jpg" alt="学園祭ライブのステージ（遠景）" loading="lazy"><figcaption><b>2011年10月</b>学園祭ライブ</figcaption></figure>
       <figure><img src="assets/img/umbrella_dance.jpg" alt="和傘の踊り（遠景）" loading="lazy"><figcaption><b>2012年1月</b>第14回卒業公演</figcaption></figure>
       <figure><img src="assets/img/group_white.jpg" alt="舞台に並ぶ塾生（遠景）" loading="lazy"><figcaption><b>2013年2月</b>NHKの撮影</figcaption></figure>
+      <figure><img src="assets/img/hist_2014.jpg" alt="日本の唄まつりコンサートの舞台（遠景）" loading="lazy"><figcaption><b>2014年1月</b>日本の唄まつりコンサート</figcaption></figure>
       <figure><img src="assets/img/stage_national.jpg" alt="全国大会の舞台（遠景）" loading="lazy"><figcaption><b>2015年4月</b>津軽三味線コンクール全国大会</figcaption></figure>
     </div>
-    <p class="wrap gallery-hint">写真は古い順に並んでいます。横にスクロールできます。</p>
-  </section>
-
-  <!-- 13 期ごとの参加状況 -->
-  <section class="wrap sec" id="gens">
-    <p class="kicker reveal">WHO'S COMING</p>
-    <h2 class="h2 reveal">期ごとの参加状況</h2>
-    <div class="gens reveal" id="gensBox">
-      <div class="gens-empty">
-        <div class="gens-bars" aria-hidden="true"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:75%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span></div>
-        <p><b>出欠の受付が始まったら（2027年10月ごろ）、期ごとの参加人数をここに出します。</b>名前は出しません。同じ期の仲間が何人来るか、ここで確かめてください。</p>
-      </div>
+    <button type="button" class="gal-btn gal-next" aria-label="次の写真へ">›</button>
     </div>
+    <p class="wrap gallery-hint">1995年から2015年まで、写真は古い順に並んでいます。横にスクロールできます。</p>
   </section>
 
   <!-- 14 これからの予定 -->
@@ -372,10 +405,10 @@
         <p class="faq-cat reveal">参加について</p>
         <details class="reveal"><summary>会費はいくらですか？</summary><p>会場などの費用が決まりしだい、2027年10月ごろの正式なご案内でお知らせします。</p></details>
         <details class="reveal"><summary>午後から、または二次会だけの参加もできますか？</summary><p>できます。出欠の回答で「式典・昼食」「開学記念館」「二次会」を分けて伺う予定です。上の「参加のしかた」もご覧ください。</p></details>
-        <details class="reveal"><summary>同期が来るか分からず、一人だと不安です</summary><p>大丈夫です。受付で名札と選手名鑑をお渡しし、期ごとに集まれる時間もつくります。出欠の受付が始まったら、このページで期ごとの参加人数を見られるようにします。</p></details>
+        <details class="reveal"><summary>同期が来るか分からず、一人だと不安です</summary><p>大丈夫です。受付で名札と選手名鑑をお渡しし、期ごとに集まれる時間もつくります。</p></details>
         <details class="reveal"><summary>家族や子ども連れでも参加できますか？</summary><p>歓迎です。出欠の回答でお子さまの食事の有無も伺います。詳しくは正式なご案内でお知らせします。</p></details>
         <p class="faq-cat reveal">当日について</p>
-        <details class="reveal"><summary>三味線は持っていったほうがいいですか？</summary><p>全員で弾く時間をつくる予定です。弾く方はぜひお持ちください。楽器の貸出については、決まりしだいお知らせします。</p></details>
+        <details class="reveal"><summary>三味線は持っていったほうがいいですか？</summary><p>全員で弾く時間をつくる予定です。弾く方はぜひお持ちください。</p></details>
         <details class="reveal"><summary>服装は決まっていますか？</summary><p>決まりはありません。歩きやすい靴と上着がおすすめです（夜は冷えます）。開学記念館では靴を脱ぐ場面があります。</p></details>
         <details class="reveal"><summary>遅れて着いても大丈夫ですか？</summary><p>大丈夫です。午前の会場で受付を済ませるか、13:15以降は開学記念館へ直接お越しください。</p></details>
         <details class="reveal"><summary>二次会はどこでやりますか？</summary><p>場所と時間は調整中です。決まりしだい、このページでお知らせします。</p></details>
@@ -421,7 +454,7 @@
 
 <a class="float-cta" id="floatCta" href="#schedule">これからの予定を見る</a>
 
-<script src="assets/js/data.js?v=20261112"></script>
-<script src="assets/js/main.js?v=20261112"></script>
+<script src="assets/js/data.js?v=20261112b"></script>
+<script src="assets/js/main.js?v=20261112b"></script>
 </body>
 </html>

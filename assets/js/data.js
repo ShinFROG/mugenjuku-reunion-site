@@ -17,7 +17,7 @@ window.SITE = {
   phases: [
     { from: "2000-01-01", to: "2027-01-07", key: "soon", label: "準備中",
       lead: "2027年1月から「やってほしいこと」を募集します。",
-      cta: { text: "これからの予定を見る", short: "これからの予定", href: "#schedule" },
+      cta: { text: "「やってほしいこと」募集について", short: "やってほしいこと募集", href: "#ideas" },
       band: ["2028.3.19 SUN", "第5回 無絃塾同窓会", "筑波大学 未来社会デザイン棟・開学記念館", "2027年1月から「やってほしいこと」を募集"] },
     { from: "2027-01-08", to: "2027-03-19", key: "ideas", label: "募集中",
       lead: "同窓会で「やってほしいこと」を募集しています。締切は2027年3月19日（金）です。",
@@ -76,7 +76,7 @@ window.SITE = {
 
   // Googleマップの徒歩ルート（Googleマップの「地図を埋め込む」で作ったURL。2026年11月）
   maps: [
-    { tab: "2会場の間", cap: "未来社会デザイン棟 → 開学記念館：約450m、歩いて6〜8分（かえで通り経由）", src: "https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d3223.729047375158!2d140.09958017580655!3d36.100092472454996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x60220d0009324a79%3A0xf64b9b07d29e46a8!2z562R5rOi5aSn5a2m5pyq5p2l56S-5Lya44OH44K244Kk44Oz5qOf44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC5aSp5LmF5L-d77yS5LiB55uu!3m2!1d36.098530499999995!2d140.103363!4m5!1s0x60220bf62abb3a91%3A0x7c95ecb255e4b93d!2z6ZaL5a2m6KiY5b-16aSo44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC!3m2!1d36.1016458!2d140.1007237!5e0!3m2!1sja!2sjp!4v1794472219299!5m2!1sja!2sjp" },
+    { tab: "2会場とバス停", cap: "未来社会デザイン棟 → 開学記念館（約450m、歩いて6〜8分）→ 筑波大学西（帰りのバス停）", src: "https://www.google.com/maps/embed?pb=!1m34!1m12!1m3!1d3223.6932388944197!2d140.09958017580666!3d36.100965222454704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m19!3e2!4m5!1s0x60220d0009324a79%3A0xf64b9b07d29e46a8!2z562R5rOi5aSn5a2m5pyq5p2l56S-5Lya44OH44K244Kk44Oz5qOf44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC5aSp5LmF5L-d77yS5LiB55uu!3m2!1d36.098530499999995!2d140.103363!4m5!1s0x60220bf62abb3a91%3A0x7c95ecb255e4b93d!2z6ZaL5a2m6KiY5b-16aSo44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC!3m2!1d36.1016458!2d140.1007237!4m5!1s0x60220c0819cd0b4d%3A0x81b2a11b0af9707e!2z562R5rOi5aSn5a2m6KW_44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC5aSp5LmF5L-d77yT5LiB55uu!3m2!1d36.1034!2d140.10155!5e0!3m2!1sja!2sjp!4v1794474934017!5m2!1sja!2sjp" },
     { tab: "行きのバス停から", cap: "平砂学生宿舎前（バス停）→ 未来社会デザイン棟：約290m、歩いて約5分", src: "https://www.google.com/maps/embed?pb=!1m24!1m8!1m3!1d3223.8099978384066!2d140.10009857580633!3d36.09811942245562!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x60220c0af4ad488f%3A0x88c007e1e93e1f3b!2z5bmz56CC5a2m55Sf5a6_6IiO5YmN44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC5aSp5LmF5L-d77yS5LiB55uu!3m2!1d36.097539999999995!2d140.10224!4m5!1s0x60220d0009324a79%3A0xf64b9b07d29e46a8!2z562R5rOi5aSn5a2m5pyq5p2l56S-5Lya44OH44K244Kk44Oz5qOf44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC5aSp5LmF5L-d77yS5LiB55uu!3m2!1d36.098530499999995!2d140.103363!5e0!3m2!1sja!2sjp!4v1794472280498!5m2!1sja!2sjp" },
     { tab: "帰りのバス停へ", cap: "開学記念館 → 筑波大学西（バス停）：約210m、歩いて3〜4分", src: "https://www.google.com/maps/embed?pb=!1m24!1m8!1m3!1d3223.631813965925!2d140.0986966758066!3d36.1024622724543!3m2!1i1024!2i768!4f13.1!4m13!3e2!4m5!1s0x60220bf62abb3a91%3A0x7c95ecb255e4b93d!2z6ZaL5a2m6KiY5b-16aSo44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC!3m2!1d36.1016458!2d140.1007237!4m5!1s0x60220c0819cd0b4d%3A0x81b2a11b0af9707e!2z562R5rOi5aSn5a2m6KW_44CB44CSMzA1LTAwMDUg6Iyo5Z-O55yM44Gk44GP44Gw5biC5aSp5LmF5L-d77yT5LiB55uu!3m2!1d36.1034!2d140.10155!5e0!3m2!1sja!2sjp!4v1794472304925!5m2!1sja!2sjp" }
   ],
@@ -87,8 +87,7 @@ window.SITE = {
     next: "2028年1月中旬",
     sources: [
       { name: "関東鉄道バス 時刻表", url: "https://kantetsu.jorudan.biz/" },
-      { name: "つくばエクスプレス 時刻表", url: "https://transfer-train.navitime.biz/tx/" },
-      { name: "高速バス つくば号", url: "https://www.kantetsu.co.jp/highwaybus/tsukuba-tokyo" }
+      { name: "つくばエクスプレス 時刻表", url: "https://transfer-train.navitime.biz/tx/" }
     ],
     go: {
       title: "行き",
@@ -105,10 +104,6 @@ window.SITE = {
           { dep: "8:48", line: "快速", to: "秋葉原 8:02／北千住 8:13", note: "9:00のバスへ" },
           { dep: "9:10", line: "区間快速", to: "秋葉原 8:17／北千住 8:28", note: "9:20のバスへ", mark: "best" },
           { dep: "9:19", line: "快速", to: "秋葉原 8:32／北千住 8:44", note: "バスに間に合わずタクシーへ", mark: "late" }
-        ]},
-        { name: "高速バス つくば号：東京駅八重洲南口 発（予約不要・1,260円）", rows: [
-          { dep: "7:30", line: "つくば号", to: "つくばセンター 8:35", note: "" },
-          { dep: "8:00", line: "つくば号", to: "つくばセンター 9:05", note: "道路状況で遅れることあり" }
         ]},
         { name: "午後から来る方：つくばセンター 6番のりば 発（開学記念館へ）", rows: [
           { dep: "12:40", line: "右回り", to: "筑波大学西 12:47", note: "おすすめ", mark: "best" },
@@ -144,9 +139,6 @@ window.SITE = {
           { dep: "22:14", line: "区間快速", to: "秋葉原 23:07", note: "区間快速の最終" },
           { dep: "23:14", line: "普通", to: "秋葉原 0:12", note: "秋葉原まで行く最終", mark: "last" }
         ]},
-        { name: "高速バス つくば号：つくばセンター ⑦のりば 発", rows: [
-          { dep: "20:00", line: "つくば号", to: "東京駅 21:11", note: "最終", mark: "last" }
-        ]}
       ],
       tip: "二次会の場所が決まったら、行き方と帰りの便をここに足します。"
     }
@@ -167,10 +159,22 @@ window.SITE = {
   ],
   hotelsChecked: "2026年11月",
 
+  // 無絃塾のYouTube。hero はトップで音なしで流す動画、picks は「いまの無絃塾を動画で」に並べる動画（古い順）
+  youtube: {
+    channel: "https://www.youtube.com/@%E7%AD%91%E6%B3%A2%E5%A4%A7%E5%AD%A6%E7%84%A1%E7%B5%83%E5%A1%BE/videos",
+    hero: { id: "ZBcpuOby0Jc", title: "2026新歓PV" },
+    picks: [
+      { id: "qCIzh4u_p8s", title: "学園祭ダイジェスト④", date: "2026年2月公開" },
+      { id: "ZBcpuOby0Jc", title: "2026新歓PV", date: "2026年4月公開" },
+      { id: "SLACJcNoxSg", title: "無絃塾の稽古風景", date: "2026年4月公開" },
+      { id: "0nGWPyitgMk", title: "無絃塾あるある！", date: "2026年5月公開" }
+    ]
+  },
+
   // 関連リンク（Instagramは2026年11月に公開のプロフィールを確認。YouTubeはそのプロフィールに載っているチャンネル）
   links: [
     { kind: "Instagram", title: "いまの無絃塾", sub: "筑波大学津軽三味線倶楽部無絃塾（@tsukuba_mugenjuku）", url: "https://www.instagram.com/tsukuba_mugenjuku/" },
-    { kind: "YouTube", title: "無絃塾の演奏動画", sub: "筑波大学津軽三味線倶楽部無絃塾のチャンネル", url: "https://www.youtube.com/channel/UCob26uFTGluBmNJ8GCnkn_Q" },
+    { kind: "YouTube", title: "無絃塾の動画", sub: "筑波大学津軽三味線倶楽部無絃塾のチャンネル", url: "https://www.youtube.com/@%E7%AD%91%E6%B3%A2%E5%A4%A7%E5%AD%A6%E7%84%A1%E7%B5%83%E5%A1%BE/videos" },
     { kind: "Webサイト", title: "喜楽座・喜幸会", sub: "無絃塾をご指導いただいている、民謡・津軽三味線の会", url: "https://www.kirakuza.net/kirakuzakikoukai" }
   ],
 

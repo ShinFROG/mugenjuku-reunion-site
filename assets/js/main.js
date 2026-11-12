@@ -114,6 +114,30 @@
     if (g && ki >= 1 && ki <= 40) { g.textContent = "第" + ki + "期のみなさん、おひさしぶりです。"; g.hidden = false; }
   }
 
+  // ---------- 「やってほしいこと」募集（いまの主題） ----------
+  function buildIdeas() {
+    var sec = $("#ideas"), f = forms.ideas;
+    if (!sec || !f) return;
+    var st = formState(f), late = ["rsvp", "final", "today", "after"].indexOf(phase.key) >= 0;
+    if (late) { sec.hidden = true; return; }
+    var state = $("#ideasState"), lead = $("#ideasLead"), period = $("#ideasPeriod"), act = $("#ideasAction");
+    if (period) period.textContent = ymJP(f.from) + "〜" + mdJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）";
+    if (st === "before") {
+      if (state) state.textContent = ymJP(f.from) + "から募集します";
+      if (act) act.innerHTML = '<span class="btn ideas-btn is-off">受付は' + ymJP(f.from) + "から</span>";
+    } else if (st === "open") {
+      if (state) state.textContent = "募集中（" + mdJP(f.to) + "まで）";
+      if (act) act.innerHTML = '<a class="btn btn-white ideas-btn" href="' + esc(f.url) + '" target="_blank" rel="noopener">「やってほしいこと」を送る</a>';
+    } else if (st === "after") {
+      if (state) state.textContent = "募集は終わりました";
+      if (lead) lead.textContent = "たくさんの声をありがとうございました。いただいた声をもとに、実行委員会で準備を進めています。";
+      if (act) act.innerHTML = "";
+    } else {
+      if (state) state.textContent = "まもなく募集します";
+      if (act) act.innerHTML = '<span class="btn ideas-btn is-off">フォームは準備中です</span>';
+    }
+  }
+
   // ---------- 開催概要：カレンダーと申込 ----------
   function buildCalendar() {
     var g = $("#calGrid"); if (!g) return;
@@ -327,6 +351,102 @@
     }).join("");
   }
 
+  // ---------- 無絃塾のYouTube ----------
+  function heroVideo() {
+    var Y = S.youtube || {}, V = Y.hero, wrap = $("#heroVideo"), hero = $(".hero");
+    var yt = $("#heroYt");
+    if (yt && V && V.id) yt.href = "https://www.youtube.com/watch?v=" + V.id;
+    if (!V || !V.id || !wrap || !hero || still) return;
+    var c = navigator.connection;
+    if (c && (c.saveData || /2g/.test(c.effectiveType || ""))) return;
+    var ctl = $("#heroVctl"), btn = $("#heroSound"), player = null, muted = true, playing = false;
+    function size() {
+      var f = wrap.querySelector("iframe"); if (!f) return;
+      var w = hero.clientWidth, hh = hero.clientHeight;
+      // 少し大きめにして、YouTubeの題名とロゴを外に出す
+      f.style.width = Math.ceil(Math.max(w, hh * 16 / 9) * 1.2) + "px";
+      f.style.height = Math.ceil(Math.max(hh, w * 9 / 16) * 1.2) + "px";
+    }
+    window.onYouTubeIframeAPIReady = function () {
+      player = new YT.Player("heroPlayer", {
+        host: "https://www.youtube-nocookie.com",
+        videoId: V.id,
+        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: V.id, playsinline: 1, rel: 0, disablekb: 1, iv_load_policy: 3, modestbranding: 1 },
+        events: {
+          onReady: function (e) { size(); e.target.mute(); e.target.playVideo(); },
+          onStateChange: function (e) {
+            if (e.data === 1 && !playing) {
+              playing = true;
+              wrap.classList.add("on");
+              hero.classList.add("has-video");
+              if (ctl) ctl.hidden = false;
+            }
+          },
+          onError: function () { wrap.remove(); }
+        }
+      });
+    };
+    var s = doc.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    s.async = true;
+    doc.head.appendChild(s);
+    addEventListener("resize", size);
+    if (btn) btn.addEventListener("click", function () {
+      if (!player || !player.unMute) return;
+      if (muted) { player.unMute(); player.setVolume(80); player.playVideo(); } else { player.mute(); }
+      muted = !muted;
+      btn.textContent = muted ? "音を出す" : "音を消す";
+      btn.setAttribute("aria-pressed", muted ? "false" : "true");
+    });
+    // トップが見えていないときは止めておく
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        if (!player || !player.playVideo || !playing) return;
+        if (es[0].isIntersecting) player.playVideo(); else player.pauseVideo();
+      }).observe(hero);
+    }
+  }
+  function buildVideos() {
+    var Y = S.youtube || {}, box = $("#vids"), sec = $("#videos");
+    var ch = $("#ytChannel"); if (ch && Y.channel) ch.href = Y.channel;
+    if (!box) return;
+    var P = Y.picks || [];
+    if (!P.length) { if (sec) sec.hidden = true; return; }
+    box.innerHTML = P.map(function (v) {
+      return '<div class="vid reveal"><button type="button" class="vid-frame" data-id="' + esc(v.id) + '" aria-label="' + esc(v.title) + 'を再生">' +
+        '<img src="https://i.ytimg.com/vi/' + esc(v.id) + '/hqdefault.jpg" alt="" loading="lazy"><span class="vid-play" aria-hidden="true"></span></button>' +
+        '<b class="vid-title">' + esc(v.title) + '</b><span class="vid-date">' + esc(v.date) + "</span></div>";
+    }).join("");
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("button.vid-frame[data-id]"); if (!b) return;
+      var f = doc.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(b.getAttribute("data-id")) + "?autoplay=1&rel=0&playsinline=1";
+      f.title = b.getAttribute("aria-label");
+      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      f.allowFullscreen = true;
+      var div = doc.createElement("div");
+      div.className = "vid-frame";
+      div.appendChild(f);
+      b.replaceWith(div);
+    });
+  }
+
+  // ---------- これまでの写真（横スクロールのボタン） ----------
+  function galleryButtons() {
+    var g = $("#gallery"); if (!g) return;
+    var prev = $(".gal-prev"), next = $(".gal-next");
+    function step(dir) { g.scrollBy({ left: dir * g.clientWidth * 0.8, behavior: still ? "auto" : "smooth" }); }
+    function upd() {
+      if (prev) prev.disabled = g.scrollLeft < 8;
+      if (next) next.disabled = g.scrollLeft + g.clientWidth > g.scrollWidth - 8;
+    }
+    if (prev) prev.addEventListener("click", function () { step(-1); });
+    if (next) next.addEventListener("click", function () { step(1); });
+    g.addEventListener("scroll", upd, { passive: true });
+    addEventListener("resize", upd);
+    upd();
+  }
+
   // ---------- 期ごとの参加状況 ----------
   function buildGens() {
     var g = S.generations || [], box = $("#gensBox");
@@ -515,6 +635,7 @@
   greet();
   applyPhase();
   applyCta();
+  buildIdeas();
   buildCalendar();
   calendarLink();
   buildApply();
@@ -527,6 +648,8 @@
   buildWays();
   buildHotels();
   buildGens();
+  buildVideos();
+  galleryButtons();
   buildLinks();
   buildRoad();
   faqToggle();
@@ -535,6 +658,7 @@
   nav();
   floatCta();
   petals();
+  heroVideo();
   reveal();
   opening();
   var up = $("#updated"); if (up && S.updated) up.textContent = jpDate(S.updated);

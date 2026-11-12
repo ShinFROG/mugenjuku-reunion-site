@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mugenjuku Reunion//JA
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:mugenjuku-reunion-5-20280319@shinfrog.github.io
+DTSTAMP:20261112T000000Z
+DTSTART:20280319T005000Z
+DTEND:20280319T070000Z
+SUMMARY:第5回 無絃塾同窓会
+LOCATION:筑波大学 未来社会デザイン棟（午前）・開学記念館（午後）
+DESCRIPTION:受付 9:50（未来社会デザイン棟）\n13:15から開学記念館\n16:00 終了予定（二次会は17:30ごろから・場所は調整中）\nhttps://shinfrog.github.io/mugenjuku-reunion-site/
+URL:https://shinfrog.github.io/mugenjuku-reunion-site/
+END:VEVENT
+END:VCALENDAR

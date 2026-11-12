@@ -7,115 +7,315 @@
 <meta name="description" content="筑波大学 津軽三味線倶楽部「無絃塾」OB・OG同窓会。2028年3月19日（日）、未来社会デザイン棟と開学記念館で開きます。">
 <meta name="robots" content="noindex">
 <meta property="og:title" content="第5回 無絃塾同窓会｜2028.3.19（日）">
-<meta property="og:description" content="また、みんなで弾こう。「やってほしいこと」募集中です。">
-<meta property="og:image" content="assets/img/hero_sakura.jpg">
+<meta property="og:description" content="また、みんなで弾こう。2028年3月19日（日）筑波大学で。">
+<meta property="og:image" content="https://shinfrog.github.io/mugenjuku-reunion-site/assets/img/hero_sakura.jpg">
+<meta name="theme-color" content="#E4533F">
+<link rel="icon" href="assets/img/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="icon" href="assets/img/icon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#E4533F">
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+
+<!-- LINEの中で開いたときの案内 -->
+<div class="line-banner" id="lineBanner" hidden>
+  <span>カレンダー登録や地図は、ブラウザで開くと使いやすくなります。</span>
+  <a id="openExternal" href="#">ブラウザで開く</a>
+  <button type="button" id="lineBannerClose" aria-label="閉じる">×</button>
+</div>
+
+<!-- オープニング（初回だけ、タップで飛ばせる） -->
+<div class="opening" id="opening" hidden aria-hidden="true">
+  <div class="env">
+    <div class="env-back"></div>
+    <div class="env-letter">
+      <p class="env-small">2028.3.19 SUN</p>
+      <p class="env-title">無絃塾同窓会</p>
+      <p class="env-sub">第五回のご案内</p>
+    </div>
+    <div class="env-front"></div>
+    <div class="env-flap"></div>
+    <div class="env-seal"><span>五</span></div>
+  </div>
+  <svg class="strings" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-20 40 Q500 28 1020 40"/><path d="M-20 60 Q500 48 1020 60"/><path d="M-20 80 Q500 68 1020 80"/>
+  </svg>
+  <p class="opening-skip">タップで進む</p>
+</div>
 
 <header class="nav" id="top">
   <div class="nav-in">
     <a class="brand" href="#top"><span class="brand-dot"></span>第5回 無絃塾同窓会</a>
     <nav class="links" id="links">
       <a href="#about">開催概要</a>
-      <a href="#plan">企画</a>
       <a href="#program">当日の流れ</a>
+      <a href="#play">弾く・踊る</a>
       <a href="#access">アクセス</a>
       <a href="#faq">Q&amp;A</a>
     </nav>
-    <a class="nav-cta" href="https://docs.google.com/forms/d/1eshTjy1dYRltrB22LF-FAKIfDrplhGG8FOQzufZtlfY/viewform" target="_blank" rel="noopener">やってほしいことを送る</a>
+    <a class="nav-cta" id="navCta" href="#schedule">これからの予定</a>
     <button class="menu" id="menu" aria-label="メニュー" aria-expanded="false"><span></span><span></span></button>
   </div>
 </header>
 
 <main>
-  <!-- ヒーロー -->
-  <section class="hero">
-    <div class="hero-photo" role="img" aria-label="桜の舞台での卒業公演"></div>
+  <!-- 01 トップ -->
+  <section class="hero" aria-label="第5回 無絃塾同窓会">
+    <div class="hero-photo" role="img" aria-label="桜の舞台での卒業公演（遠景）"></div>
     <div class="hero-shade"></div>
+    <div class="petals" id="petals" aria-hidden="true"></div>
+    <div class="hero-badge" id="heroBadge"><small>当日まで</small><b id="heroDays">493</b><small>日</small></div>
     <div class="hero-text">
-      <p class="chip">2028.3.19 SUN</p>
-      <h1>また、みんなで<br>弾こう。</h1>
+      <p class="hero-greet" id="kiGreet" hidden></p>
+      <p class="chips"><span class="chip">2028.3.19 SUN</span><span class="chip chip-glass" id="phaseChip">準備中</span></p>
+      <h1 class="brush"><span class="ln">また、みんなで</span><span class="ln">弾こう。</span></h1>
       <p class="hero-sub">第5回 無絃塾同窓会<span class="sep">｜</span><br class="sp">筑波大学 未来社会デザイン棟・開学記念館（予定）</p>
+      <p class="hero-lead" id="phaseLead"></p>
+      <div class="today-now" id="todayNow" hidden></div>
       <div class="hero-btns">
-        <a class="btn btn-red" href="https://docs.google.com/forms/d/1eshTjy1dYRltrB22LF-FAKIfDrplhGG8FOQzufZtlfY/viewform" target="_blank" rel="noopener">「やってほしいこと」を送る</a>
+        <a class="btn btn-red" id="heroCta" href="#schedule">これからの予定を見る</a>
         <a class="btn btn-glass" href="#access">アクセスとバスの時刻</a>
       </div>
     </div>
-    <a class="scroll-hint" href="#about" aria-label="下へ"><span></span></a>
+    <svg class="hero-strings" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 L1200 18"/><path d="M0 30 L1200 30"/><path d="M0 42 L1200 42"/></svg>
   </section>
 
-  <!-- 開催概要 -->
-  <section class="wrap" id="about">
-    <div class="tiles reveal">
-      <div class="tile tile-red">
-        <span class="tile-ic">⏳</span>
-        <span class="tile-k">同窓会まで</span>
-        <span class="tile-v" data-countdown="2028-03-19">あと 493 日</span>
-        <span class="tile-s">2028年3月19日（日）</span>
-      </div>
-      <div class="tile">
-        <span class="tile-ic">🕘</span>
-        <span class="tile-k">受付</span>
-        <span class="tile-v">9:50〜</span>
-        <span class="tile-s">未来社会デザイン棟</span>
-      </div>
-      <div class="tile">
-        <span class="tile-ic">🚌</span>
-        <span class="tile-k">つくば駅から</span>
-        <span class="tile-v">バスで約10分</span>
-        <span class="tile-s">「平砂学生宿舎前」下車</span>
-      </div>
-      <div class="tile">
-        <span class="tile-ic">🍻</span>
-        <span class="tile-k">二次会</span>
-        <span class="tile-v">17:30〜20:00</span>
-        <span class="tile-s">開学記念館</span>
-      </div>
-    </div>
-    <p class="note reveal">翌20日（月）は春分の日の予定で、三連休の中日です。詳しいご案内と出欠の受付は、2027年10月ごろにお送りします。</p>
-  </section>
+  <!-- 02 流れる帯 -->
+  <div class="band" aria-hidden="true"><div class="band-track" id="band"></div></div>
 
-  <!-- 募集 -->
-  <section class="wrap">
-    <div class="cta reveal">
-      <div class="cta-text">
-        <p class="cta-label">いま募集中</p>
-        <h2>「やってほしいこと」を<br class="sp">教えてください</h2>
-        <p>一緒に弾きたい曲、見たい映像、やってみたい企画、手伝えること。いただいた声をもとに、実行委員会で1年かけて準備します。</p>
-        <ul class="cta-meta">
-          <li>締切 <b>2027年3月19日（金）</b></li>
-          <li>3分で答えられます</li>
-          <li data-countdown="2027-03-19" data-prefix="締切まで あと ">締切まで あと 127 日</li>
-        </ul>
-      </div>
-      <a class="btn btn-white" href="https://docs.google.com/forms/d/1eshTjy1dYRltrB22LF-FAKIfDrplhGG8FOQzufZtlfY/viewform" target="_blank" rel="noopener">回答フォームを開く →</a>
+  <!-- 03 開催概要 -->
+  <section class="wrap sec" id="about">
+    <p class="kicker reveal">ABOUT</p>
+    <h2 class="h2 reveal">開催概要</h2>
+    <div class="about">
+      <dl class="facts reveal">
+        <div><dt>日時</dt><dd><b>2028年3月19日（日）</b><span>受付 9:50／開場 10:00／16:00 終了予定。二次会は17:30ごろから（場所は調整中）</span><em>翌20日（月）は春分の日の予定で、三連休の中日です。</em></dd></div>
+        <div><dt>会場</dt><dd><b>筑波大学 未来社会デザイン棟（午前）</b><b>開学記念館（午後）</b><span>2つの会場は約450m、歩いて6〜8分です。二次会の場所は調整中です。</span></dd></div>
+        <div><dt>対象</dt><dd><b>無絃塾のOB・OGのみなさん</b><span>現役生と先生方もご一緒します。ご家族連れもどうぞ（詳しくは正式なご案内で）。</span></dd></div>
+        <div><dt>会費</dt><dd><b>未定</b><span>決まりしだい、2027年10月ごろの正式なご案内でお知らせします。</span></dd></div>
+        <div><dt>申込</dt><dd id="factApply"><b>出欠の受付は2027年10月ごろから</b><span>締切は2028年2月18日（金）の予定です。</span></dd></div>
+        <div><dt>連絡先</dt><dd><b>無絃塾同窓会実行委員会</b><span>ご連絡は、第一報のメールにご返信ください。</span></dd></div>
+      </dl>
+      <aside class="cal reveal">
+        <div class="cal-head"><b>2028</b><span>MARCH</span></div>
+        <div class="cal-grid" id="calGrid"></div>
+        <p class="cal-note"><span class="cal-dot"></span>3月19日（日） 当日　<span class="cal-ring"></span>20日（月） 春分の日（予定）</p>
+        <div class="cal-btns">
+          <a class="btn btn-small btn-ink" id="gcalBtn" href="#" target="_blank" rel="noopener">Googleカレンダーに追加</a>
+          <a class="btn btn-small btn-line-o" href="assets/mugenjuku5.ics" download>iPhone・Outlookに追加（.ics）</a>
+        </div>
+      </aside>
     </div>
   </section>
 
-  <!-- ギャラリー -->
-  <section class="story">
+  <!-- 04 お知らせ -->
+  <section class="wrap sec-tight" id="news">
+    <div class="news reveal">
+      <h2 class="news-h">お知らせ</h2>
+      <ul id="newsList"></ul>
+    </div>
+  </section>
+
+  <!-- 05 この日できること -->
+  <section class="wrap sec" id="can">
+    <p class="kicker reveal">WHAT TO ENJOY</p>
+    <h2 class="h2 reveal">この日できること</h2>
+    <p class="lead reveal">中身は、みなさんの「やってほしいこと」をもとに、実行委員会で決めていきます。</p>
+    <div class="can-grid">
+      <article class="can reveal"><div class="can-img"><img src="assets/img/group_white.jpg" alt="舞台に並ぶ塾生（遠景）" loading="lazy"></div><span class="no">01</span><h3>再会と式典</h3><p>受付で名札と選手名鑑。式典では、卒業する4年生をOBOGに迎えます。</p></article>
+      <article class="can reveal"><div class="can-img"><img src="assets/img/stage_lights.jpg" alt="学祭のステージの照明" loading="lazy"></div><span class="no">02</span><h3>昔の映像と新作映像</h3><p>昔の卒公や合宿の映像と、有志の新作（1本3分以内）を昼食どきに上映。投票もあります。</p></article>
+      <article class="can reveal"><div class="can-img"><img src="assets/img/umbrella_dance.jpg" alt="和傘の踊り（遠景）" loading="lazy"></div><span class="no">03</span><h3>開学記念館の展示ツアー</h3><p>衣装・着物（試着も）、賞状やビラ、展示パネルを塾生の案内で回ります。</p></article>
+      <article class="can reveal"><div class="can-img"><img src="assets/img/dance_sakura.jpg" alt="桜の舞台で踊る塾生（遠景）" loading="lazy"><span class="badge">いちばん多かった声</span></div><span class="no">04</span><h3>全員で弾いて踊る</h3><p>記念演奏の最後に、OBOG・現役生・先生方で津軽じょんがら節と踊り。</p></article>
+      <article class="can reveal"><div class="can-img"><img src="assets/img/stage_national.jpg" alt="全国大会の舞台（遠景）" loading="lazy"></div><span class="no">05</span><h3>記念演奏</h3><p>開学記念館の舞台で、現役生の演奏、元頭の曲弾、新しい演目の披露。</p></article>
+      <article class="can reveal"><div class="can-img"><img src="assets/img/stage_neputa.jpg" alt="卒業公演の舞台（遠景）" loading="lazy"></div><span class="no">06</span><h3>二次会</h3><p>場所と時間は調整中です。決まりしだい、このページでお知らせします。</p></article>
+    </div>
+    <div class="more-ideas reveal"><span>ほかにも準備中</span><b>選手名鑑</b><b>無絃塾通信</b><b>就活コーナー</b><b>先生の名言カレンダー</b></div>
+  </section>
+
+  <!-- 06 当日の流れ -->
+  <section class="wrap sec" id="program">
+    <p class="kicker reveal">TIMELINE</p>
+    <h2 class="h2 reveal">当日の流れ（予定）</h2>
+    <p class="lead reveal">午前は未来社会デザイン棟、午後は開学記念館。時刻は予定で、会場と調整しながら決めていきます。</p>
+    <div class="legend reveal"><span class="lg lg-a">未来社会デザイン棟</span><span class="lg lg-b">開学記念館</span><span class="lg lg-n">二次会</span></div>
+    <div class="flow-wrap">
+      <ol class="chapters" id="chapters"></ol>
+      <aside class="flow-side reveal">
+        <figure class="side-photo"><img src="assets/img/ensemble_2004.jpg" alt="卒業公演の大合奏（遠景）" loading="lazy"><figcaption>最後は全員で、<br>津軽じょんがら節・踊り。</figcaption></figure>
+        <div class="side-card">
+          <b>前の日と次の日</b>
+          <p>3月18日（土）設営<br>3月20日（月・祝）片付け</p>
+          <p class="side-small">プレ同窓会（通しリハ）は2月26日（土）です。</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 07 全員で弾く・踊る -->
+  <section class="play" id="play">
     <div class="wrap">
+      <p class="kicker kicker-light reveal">PLAY TOGETHER</p>
+      <h2 class="h2 reveal">全員で弾く・踊る</h2>
+      <p class="lead lead-light reveal">記念演奏の最後は、OBOG・現役生・先生方みんなで。弾いても、踊っても、聴いているだけでも大丈夫です。</p>
+      <div class="roles reveal">
+        <div class="role"><i>🪕</i><b>弾く</b><p>津軽じょんがら節を一緒に</p></div>
+        <div class="role"><i>💃</i><b>踊る</b><p>踊りの輪に入る</p></div>
+        <div class="role"><i>👏</i><b>聴く</b><p>客席で楽しむ</p></div>
+        <div class="role"><i>🍻</i><b>二次会から</b><p>夜から合流（場所は調整中）</p></div>
+      </div>
+      <h3 class="h3 h3-light reveal">演奏準備キット</h3>
+      <p class="lead lead-light reveal">曲ごとに、譜面・音源（ゆっくり版と本番テンポ）・手元や足元だけを写した動画・練習のポイントをまとめて公開します（2027年秋ごろ）。</p>
+      <div class="kits">
+        <article class="kit reveal"><span class="kit-no">01</span><h4>津軽じょんがら節</h4><ul><li>譜面</li><li>音源（ゆっくり／本番）</li><li>手元の動画</li><li>練習のポイント</li></ul><p class="kit-state">準備中</p></article>
+        <article class="kit reveal"><span class="kit-no">02</span><h4>踊り</h4><ul><li>振付の動画（足元・後ろ姿）</li><li>音源</li><li>覚えるコツ</li></ul><p class="kit-state">準備中</p></article>
+      </div>
+      <div class="bring reveal">
+        <b>弾く人の持ち物</b>
+        <ul><li>三味線</li><li>撥</li><li>駒</li><li>指すり</li><li>チューナー</li><li>譜面（キットから印刷）</li></ul>
+        <p>楽器の貸出と練習会の日程は、決まりしだいここでお知らせします。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 アクセス -->
+  <section class="wrap sec" id="access">
+    <p class="kicker reveal">ACCESS</p>
+    <h2 class="h2 reveal">会場とアクセス</h2>
+    <p class="lead reveal">どちらも筑波大学のキャンパスの中です。つくば駅（つくばセンター）からバスで約10分。</p>
+
+    <div class="venues">
+      <article class="venue v-a reveal">
+        <p class="venue-tag">午前　9:50 受付</p>
+        <h3>未来社会デザイン棟</h3>
+        <dl>
+          <div><dt>場所</dt><dd>つくば市天久保2-1。平砂学生宿舎のエリア（筑波大学の西地区マップ97番）</dd></div>
+          <div><dt>最寄りのバス停</dt><dd>平砂学生宿舎前（右回り）から約290m、歩いて約5分。天久保二丁目（左回り）からも歩いて約5分</dd></div>
+        </dl>
+        <a class="venue-map" data-place="a" href="#" target="_blank" rel="noopener">地図アプリで開く</a>
+      </article>
+      <article class="venue v-b reveal">
+        <p class="venue-tag">午後　13:15 開門</p>
+        <h3>開学記念館</h3>
+        <dl>
+          <div><dt>場所</dt><dd>つくば市天久保3丁目。かえで通りの西側（筑波大学の南地区マップ72番）</dd></div>
+          <div><dt>最寄りのバス停</dt><dd>筑波大学西から約210m、歩いて3〜4分</dd></div>
+        </dl>
+        <a class="venue-map" data-place="b" href="#" target="_blank" rel="noopener">地図アプリで開く</a>
+      </article>
+      <article class="venue v-n reveal">
+        <p class="venue-tag">夜　17:30ごろ</p>
+        <h3>二次会</h3>
+        <dl>
+          <div><dt>場所</dt><dd>調整中です。決まりしだいお知らせします。</dd></div>
+          <div><dt>最寄りのバス停</dt><dd>場所が決まったら載せます。</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <div class="ontime reveal">
+      <p class="ontime-k">9:50の受付に間に合う行き方</p>
+      <ol class="ontime-steps">
+        <li><time>8:17</time><b>秋葉原 発</b><span>つくばエクスプレス 区間快速（北千住 8:28）</span></li>
+        <li><time>9:10</time><b>つくば 着</b><span>A3出口へ。地上に出てすぐ</span></li>
+        <li class="busstep"><time>9:20</time><b>つくばセンター 6番のりば 発</b><span>「筑波大学循環」<strong>右回り</strong>（190円・IC可）</span></li>
+        <li><time>9:26</time><b>平砂学生宿舎前 着</b><span>歩いて約5分</span></li>
+        <li class="goal"><time>9:31</time><b>未来社会デザイン棟</b><span>受付 9:50</span></li>
+      </ol>
+      <p class="ontime-note">9:00発の<strong>左回り</strong>（天久保二丁目 9:06着）でも間に合います。9:40発では受付に遅れます。</p>
+    </div>
+
+    <div class="mapbox reveal">
+      <div class="gmap">
+        <div class="gmap-tabs" role="tablist" id="gmapTabs"></div>
+        <div class="gmap-frame"><iframe id="gmapFrame" title="Googleマップ（徒歩ルート）" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+        <p class="gmap-cap" id="gmapCap"></p>
+      </div>
+      <div class="map-side">
+        <p class="map-side-k">地図アプリで開く</p>
+        <div class="maplinks" id="mapLinks"></div>
+        <a class="btn btn-small btn-ink" id="walkRoute" href="#" target="_blank" rel="noopener">2会場の徒歩ルートを開く</a>
+      </div>
+    </div>
+
+    <div class="tt reveal" id="tt">
+      <div class="tt-tabs" role="tablist" id="ttTabs"></div>
+      <div class="tt-body" id="ttBody"></div>
+      <p class="tt-src" id="ttSrc"></p>
+    </div>
+
+    <div class="ways" id="ways"></div>
+    <p class="note-s reveal">日曜は学内のお店がほとんど閉まっています。近くのコンビニ：ファミリーマート（平砂学生宿舎前バス停のそば）、セブン-イレブン（開学記念館の南西）。キャンパス内は全面禁煙（加熱式たばこも）です。</p>
+
+    <div class="stay" id="stay" hidden>
+      <h3 class="h3 reveal">つくば駅のまわりに泊まる</h3>
+      <p class="lead reveal">翌20日は春分の日（予定）で、三連休の中日です。早めの予約がおすすめです。料金と空室は各ホテルでご確認ください。</p>
+      <div class="hotels" id="hotels"></div>
+      <p class="note-s" id="hotelsSrc"></p>
+    </div>
+  </section>
+
+  <!-- 09 モデルコース -->
+  <section class="wrap sec" id="course">
+    <p class="kicker reveal">MODEL COURSE</p>
+    <h2 class="h2 reveal">あなたに合わせた<br class="sp">参加のしかた</h2>
+    <div class="courses">
+      <article class="course reveal">
+        <p class="course-tag tag-a">朝から全部</p>
+        <h3>受付から二次会まで</h3>
+        <p class="course-bus">行き：つくばセンター 9:20 右回り</p>
+        <ul><li>9:50 受付・式典・昼食</li><li>13:15 開学記念館で展示と演奏</li><li>17:30ごろ 二次会（場所は調整中）</li></ul>
+      </article>
+      <article class="course reveal">
+        <p class="course-tag tag-b">午後から</p>
+        <h3>開学記念館から合流</h3>
+        <p class="course-bus">行き：つくばセンター 12:40 の右回り → 筑波大学西 12:47 着、歩いて3〜4分</p>
+        <ul><li>13:15 開門（新二役の口上）</li><li>13:20 展示ツアー</li><li>14:30 記念演奏</li></ul>
+      </article>
+      <article class="course reveal">
+        <p class="course-tag tag-n">二次会だけ</p>
+        <h3>夜だけでも、ぜひ</h3>
+        <p class="course-bus">行き方は、場所が決まりしだいここに載せます</p>
+        <ul><li>17:30ごろ 二次会（予定）</li><li>場所と終わりの時刻は調整中</li><li>帰りのバスと終電は「帰り」の表に</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- 10 持ち物・服装・配慮 -->
+  <section class="wrap sec" id="prepare">
+    <p class="kicker reveal">BEFORE YOU COME</p>
+    <h2 class="h2 reveal">持ち物・服装・ご案内</h2>
+    <div class="prep">
+      <div class="prep-c reveal"><i>🧥</i><b>服装</b><p>動きやすい服と、15分ほど歩ける靴で。3月のつくばは夜1℃台まで冷えます（平年）。上着をお忘れなく。</p></div>
+      <div class="prep-c reveal"><i>👟</i><b>靴を脱ぐ場面</b><p>開学記念館には和室があります。脱ぎ履きしやすい靴がおすすめです。</p></div>
+      <div class="prep-c reveal"><i>🍱</i><b>食事</b><p>昼食は会で用意する予定です。日曜は学内のお店がほぼ閉まっています。</p></div>
+      <div class="prep-c reveal"><i>👶</i><b>お子さま連れ</b><p>歓迎です。出欠の回答でお子さまの食事の有無も伺います。授乳やおむつ替えの場所は確認中です。</p></div>
+      <div class="prep-c reveal"><i>♿</i><b>移動に不安がある方</b><p>2会場の移動や段差が心配な方は、実行委員会へご相談ください。</p></div>
+      <div class="prep-c reveal"><i>☂️</i><b>雨の日・花粉</b><p>折りたたみ傘を。3月は花粉の季節なので対策もどうぞ。</p></div>
+    </div>
+  </section>
+
+  <!-- 11 第4回のアンケート -->
+  <section class="voice" id="voice">
+    <div class="wrap">
+      <p class="kicker reveal">YOUR VOICE</p>
+      <h2 class="h2 reveal">第4回のアンケート、<br class="sp">ちゃんと読みました</h2>
+      <p class="lead reveal">第4回（2025年2月23日）でいただいた声を、今回の日程と中身に生かしました。</p>
+      <div class="voices">
+        <div class="v reveal"><p class="q">「翌日が休みの日がいい」</p><p class="a"><i>✓</i>三連休の中日にしました</p></div>
+        <div class="v reveal"><p class="q">「せめて半年前に知らせてほしい」</p><p class="a"><i>✓</i>1年以上前にお知らせしています</p></div>
+        <div class="v reveal"><p class="q">「昔の卒公の動画を見たい」</p><p class="a"><i>✓</i>昼食のときに昔の映像を上映します</p></div>
+        <div class="v reveal"><p class="q">「みんなで六段を弾きたい、全員で踊りたい」</p><p class="a"><i>✓</i>全員で弾いて踊る時間をつくります</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 これまでの同窓会 -->
+  <section class="story" id="history">
+    <div class="wrap">
+      <p class="kicker reveal">SINCE 1994</p>
       <h2 class="h2 reveal">1994年から続く舞台が、<br class="sp">つくばに戻ってくる。</h2>
       <p class="lead reveal">卒公、全国大会、学祭、合宿。あの日の音を、もう一度みんなで。</p>
-    </div>
-    <div class="gallery" id="gallery">
-      <figure><img src="assets/img/stage_blue.jpg" alt="第7回卒業公演の舞台" loading="lazy"><figcaption>2004　第7回卒業公演</figcaption></figure>
-      <figure><img src="assets/img/stage_neputa.jpg" alt="第9回卒業公演の舞台" loading="lazy"><figcaption>2006　第9回卒業公演</figcaption></figure>
-      <figure><img src="assets/img/hero_sakura.jpg" alt="桜の舞台の卒業公演" loading="lazy"><figcaption>2008　卒業公演</figcaption></figure>
-      <figure><img src="assets/img/umbrella_dance.jpg" alt="和傘の踊り" loading="lazy"><figcaption>2011　第14回卒業公演</figcaption></figure>
-      <figure><img src="assets/img/group_white.jpg" alt="舞台での集合" loading="lazy"><figcaption>2012　NHKの撮影</figcaption></figure>
-      <figure><img src="assets/img/stage_national.jpg" alt="津軽三味線コンクール全国大会の舞台" loading="lazy"><figcaption>2015　津軽三味線コンクール全国大会</figcaption></figure>
-      <figure><img src="assets/img/stage_lights.jpg" alt="学祭のステージ" loading="lazy"><figcaption>2004　学祭</figcaption></figure>
-      <figure><img src="assets/img/sunset.jpg" alt="海に沈む夕日" loading="lazy"><figcaption>2006　海ツアー</figcaption></figure>
-    </div>
-    <div class="wrap">
-      <h3 class="h3 reveal">これまでの同窓会</h3>
       <ol class="history">
         <li class="reveal"><span class="hn">第1回</span><b>2012年度</b><p>サブタイトルは「おーしばらく！！」</p></li>
         <li class="reveal"><span class="hn">第2回</span><b>2015年11月22日</b><p>プレ同窓会と記念演奏</p></li>
@@ -124,181 +324,102 @@
         <li class="reveal next"><span class="hn">第5回</span><b>2028年3月19日</b><p>未来社会デザイン棟と開学記念館で</p></li>
       </ol>
     </div>
+    <div class="gallery">
+      <figure><img src="assets/img/stage_lights.jpg" alt="学祭のステージの照明" loading="lazy"><figcaption><b>2004年10月</b>学祭</figcaption></figure>
+      <figure><img src="assets/img/stage_blue.jpg" alt="第7回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2005年2月</b>第7回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/stage_banners.jpg" alt="第7回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2005年2月</b>第7回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/sunset.jpg" alt="海ツアーで見た海" loading="lazy"><figcaption><b>2006年9月</b>海ツアー</figcaption></figure>
+      <figure><img src="assets/img/dance_kids.jpg" alt="第9回卒業公演の舞台（遠景）" loading="lazy"><figcaption><b>2007年1月</b>第9回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/ensemble_2006.jpg" alt="第9回卒業公演の大合奏（遠景）" loading="lazy"><figcaption><b>2007年1月</b>第9回卒業公演の大合奏</figcaption></figure>
+      <figure><img src="assets/img/hero_sakura.jpg" alt="桜の舞台の卒業公演（遠景）" loading="lazy"><figcaption><b>2009年1月</b>卒業公演</figcaption></figure>
+      <figure><img src="assets/img/umbrella_dance.jpg" alt="和傘の踊り（遠景）" loading="lazy"><figcaption><b>2012年1月</b>第14回卒業公演</figcaption></figure>
+      <figure><img src="assets/img/group_white.jpg" alt="舞台に並ぶ塾生（遠景）" loading="lazy"><figcaption><b>2013年2月</b>NHKの撮影</figcaption></figure>
+      <figure><img src="assets/img/stage_national.jpg" alt="全国大会の舞台（遠景）" loading="lazy"><figcaption><b>2015年4月</b>津軽三味線コンクール全国大会</figcaption></figure>
+    </div>
+    <p class="wrap gallery-hint">写真は古い順に並んでいます。横にスクロールできます。</p>
   </section>
 
-  <!-- 企画 -->
-  <section class="wrap" id="plan">
-    <h2 class="h2 reveal">こんな同窓会を考えています</h2>
-    <p class="lead reveal">中身は、みなさんの「やってほしいこと」をもとに、実行委員会で決めていきます。</p>
-    <div class="cards">
-      <article class="card reveal">
-        <div class="card-img"><img src="assets/img/dance_sakura.jpg" alt="桜の舞台で踊る塾生" loading="lazy"><span class="badge">いちばん多かった声</span></div>
-        <h3>全員で弾いて踊る</h3>
-        <p>記念演奏の最後に、OBOG・現役生・先生方で六段・数え唄・踊り。</p>
-      </article>
-      <article class="card reveal">
-        <div class="card-img"><img src="assets/img/stage_national.jpg" alt="全国大会の舞台" loading="lazy"></div>
-        <h3>記念演奏</h3>
-        <p>開学記念館の舞台で、現役生の演奏、元頭の曲弾、新しい演目の披露。</p>
-      </article>
-      <article class="card reveal">
-        <div class="card-img"><img src="assets/img/stage_lights.jpg" alt="学祭のステージの照明" loading="lazy"></div>
-        <h3>昔の映像と新作映像</h3>
-        <p>昔の卒公や合宿の映像と、有志の新作（1本3分以内）を昼食時に上映。投票もあります。</p>
-      </article>
-      <article class="card reveal">
-        <div class="card-img"><img src="assets/img/umbrella_dance.jpg" alt="和傘を持った踊り" loading="lazy"></div>
-        <h3>展示ツアー</h3>
-        <p>開学記念館で、衣装・着物（試着も）、賞状やビラ、展示パネルを塾生の案内で回ります。</p>
-      </article>
-    </div>
-    <div class="more-ideas reveal">
-      <span>ほかにも準備中</span>
-      <b>選手名鑑</b><b>無絃塾通信</b><b>就活コーナー</b><b>先生の名言カレンダー</b>
-    </div>
-  </section>
-
-  <!-- アンケート -->
-  <section class="voice" id="voice">
-    <div class="wrap">
-      <h2 class="h2 reveal">第4回のアンケート、<br class="sp">ちゃんと読みました</h2>
-      <p class="lead reveal">第4回（2025年2月23日）でいただいた声を、今回の日程に生かしました。</p>
-      <div class="voices">
-        <div class="v reveal"><p class="q">「翌日が休みの日がいい」</p><p class="a"><i>✓</i>三連休の中日にしました</p></div>
-        <div class="v reveal"><p class="q">「せめて半年前に知らせてほしい」</p><p class="a"><i>✓</i>1年以上前にお知らせしています</p></div>
-        <div class="v reveal"><p class="q">「現役生に無理のない日程で」</p><p class="a"><i>✓</i>卒業公演の翌日を避けました</p></div>
-        <div class="v reveal"><p class="q">「みんなで六段を弾きたい、全員で踊りたい」</p><p class="a"><i>✓</i>全員で弾いて踊る時間をつくります</p></div>
+  <!-- 13 期ごとの参加状況 -->
+  <section class="wrap sec" id="gens">
+    <p class="kicker reveal">WHO'S COMING</p>
+    <h2 class="h2 reveal">期ごとの参加状況</h2>
+    <div class="gens reveal" id="gensBox">
+      <div class="gens-empty">
+        <div class="gens-bars" aria-hidden="true"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:75%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span></div>
+        <p><b>出欠の受付が始まったら（2027年10月ごろ）、期ごとの参加人数をここに出します。</b>名前は出しません。同じ期の仲間が何人来るか、ここで確かめてください。</p>
       </div>
     </div>
   </section>
 
-  <!-- 当日の流れ -->
-  <section class="wrap" id="program">
-    <h2 class="h2 reveal">当日の流れ（予定）</h2>
-    <p class="lead reveal">午前は未来社会デザイン棟、午後は開学記念館。時刻は予定で、決まりしだい更新します。</p>
-    <div class="flow-wrap">
-    <div class="flow">
-      <div class="venue venue-a reveal"><span>📍 未来社会デザイン棟</span><small>受付から昼食まで</small></div>
-      <ol class="steps">
-        <li class="reveal"><time>9:50</time><div><b>受付</b><p>名札と選手名鑑をお渡しします</p></div></li>
-        <li class="reveal"><time>10:00</time><div><b>開場・ウェルカムドリンク</b><p>直近の卒公（2028年2月）の映像を流します</p></div></li>
-        <li class="reveal"><time>11:00</time><div><b>式典</b><p>記念品（名言カレンダー）、卒業する4年生をOBOGに迎える</p></div></li>
-        <li class="reveal"><time>12:10</time><div><b>集合写真</b><p>大階段でみんなで1枚</p></div></li>
-        <li class="reveal"><time>12:15</time><div><b>昼食と映像</b><p>昔の映像と有志の新作を上映、投票</p></div></li>
-      </ol>
-      <div class="move reveal"><time>13:00</time>開学記念館へ移動（約15分）</div>
-      <div class="venue venue-b reveal"><span>📍 開学記念館</span><small>開門から二次会まで</small></div>
-      <ol class="steps">
-        <li class="reveal"><time>13:15</time><div><b>開門</b><p>新二役の口上でお出迎え</p></div></li>
-        <li class="reveal"><time>13:20</time><div><b>展示ツアー</b><p>衣装・賞状・ビラ・展示パネル、先生方の部屋と売店</p></div></li>
-        <li class="reveal hi"><time>14:30</time><div><b>記念演奏</b><p>現役生、元頭の曲弾。最後に全員で六段・数え唄・踊り</p></div></li>
-        <li class="reveal"><time>16:00</time><div><b>終了</b><p>おつかれさまでした</p></div></li>
-        <li class="reveal night"><time>17:30</time><div><b>二次会</b><p>開学記念館で（20:00 中締め）</p></div></li>
-      </ol>
-    </div>
-    <aside class="flow-side reveal">
-      <figure class="side-photo"><img src="assets/img/dance_red.jpg" alt="舞台で踊る塾生" loading="lazy"><figcaption>最後は全員で、六段・数え唄・踊り。</figcaption></figure>
-      <div class="side-card">
-        <b>前の日と次の日</b>
-        <p>3月18日（土）設営<br>3月20日（月・祝）片付け</p>
-        <p class="side-small">プレ同窓会（通しリハ）は2月26日（土）です。</p>
-      </div>
-    </aside>
-    </div>
-  </section>
-
-  <!-- アクセス -->
-  <section class="access" id="access">
-    <div class="wrap">
-      <h2 class="h2 reveal">会場とアクセス</h2>
-      <p class="lead reveal">どちらも筑波大学のキャンパス内です。つくば駅（つくばセンター）からバスで来られます。</p>
-
-      <div class="venues">
-        <div class="vcard reveal">
-          <p class="vtag vtag-a">午前</p>
-          <h3>未来社会デザイン棟</h3>
-          <p>受付・式典・昼食。2026年にできた新しい建物です。</p>
-          <dl id="venueA"></dl>
-        </div>
-        <div class="vcard reveal">
-          <p class="vtag vtag-b">午後</p>
-          <h3>開学記念館</h3>
-          <p>展示ツアー・記念演奏・二次会。第3回（2018年）の会場です。</p>
-          <dl id="venueB"></dl>
-        </div>
-      </div>
-
-      <div class="map reveal">
-        <div class="map-tabs" role="tablist">
-          <button class="on" data-map="a" role="tab">未来社会デザイン棟</button>
-          <button data-map="b" role="tab">開学記念館</button>
-        </div>
-        <iframe id="mapFrame" title="地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-
-      <div class="ways">
-        <div class="way reveal"><i>🚃</i><b>電車</b><p id="wayTrain"></p></div>
-        <div class="way reveal"><i>🚌</i><b>バス</b><p id="wayBus"></p></div>
-        <div class="way reveal"><i>🚶</i><b>2つの会場の間</b><p id="wayWalk"></p></div>
-        <div class="way reveal"><i>🚗</i><b>車</b><p id="wayCar"></p></div>
-      </div>
-
-      <div class="bus reveal" id="bus">
-        <div class="bus-head">
-          <h3>バスの時刻（日曜・祝日）</h3>
-          <p class="bus-note" id="busNote"></p>
-        </div>
-        <div class="bus-tabs" role="tablist" id="busTabs"></div>
-        <div class="bus-body" id="busBody"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- これからの予定 -->
-  <section class="wrap" id="schedule">
+  <!-- 14 これからの予定 -->
+  <section class="wrap sec" id="schedule">
+    <p class="kicker reveal">SCHEDULE</p>
     <h2 class="h2 reveal">これからの予定</h2>
     <ol class="road" id="road">
-      <li data-from="2027-01-01" data-to="2027-03-19"><time>2027年1月〜3月19日</time><b>「やってほしいこと」募集</b></li>
-      <li data-from="2027-10-01" data-to="2028-02-18"><time>2027年10月ごろ</time><b>正式なご案内と出欠の受付</b><p>無絃塾通信も月1回お届けします</p></li>
+      <li data-from="2027-01-08" data-to="2027-03-19" data-form="ideas"><time>2027年1月〜3月19日</time><b>「やってほしいこと」募集</b><p>3分で答えられるフォームです</p></li>
+      <li data-from="2027-10-01" data-to="2028-02-18" data-form="rsvp"><time>2027年10月ごろ</time><b>正式なご案内と出欠の受付</b><p>無絃塾通信も月1回お届けします</p></li>
       <li data-from="2028-02-18" data-to="2028-02-18"><time>2028年2月18日（金）</time><b>出欠の締切</b></li>
       <li data-from="2028-03-19" data-to="2028-03-19"><time>2028年3月19日（日）</time><b>同窓会当日</b></li>
     </ol>
   </section>
 
-  <!-- Q&A -->
-  <section class="wrap" id="faq">
-    <h2 class="h2 reveal">よくある質問</h2>
+  <!-- 15 Q&A -->
+  <section class="wrap sec" id="faq">
+    <p class="kicker reveal">Q&amp;A</p>
+    <div class="faq-head reveal"><h2 class="h2">よくある質問</h2><button type="button" class="btn btn-small btn-line-o" id="faqAll">すべて開く</button></div>
     <div class="faq-wrap">
-    <div class="faq">
-      <details class="reveal"><summary>会費はいくらですか？</summary><p>会場などの費用が決まりしだい、2027年10月ごろの正式なご案内でお知らせします。</p></details>
-      <details class="reveal"><summary>二次会だけ、昼の部だけの参加もできますか？</summary><p>できます。出欠フォームで「式典・昼食」「開学記念館」「二次会」を分けてうかがう予定です。</p></details>
-      <details class="reveal"><summary>家族や子ども連れでも参加できますか？</summary><p>出欠フォームで、お子さまの食事の有無もうかがう予定です。詳しくは正式なご案内でお知らせします。</p></details>
-      <details class="reveal"><summary>三味線は持っていったほうがいいですか？</summary><p>全員で弾く時間をつくる予定です。楽器の持ち込みについては、正式なご案内でお知らせします。</p></details>
-      <details class="reveal"><summary>車で行けますか？</summary><p id="faqCar">大学の駐車場を使えるかどうかは確認中です。決まりしだいお知らせします。</p></details>
-      <details class="reveal"><summary>泊まるところはありますか？</summary><p>翌20日（春分の日の予定）を含む三連休の中日です。つくば駅周辺のホテルは、早めの予約がおすすめです。</p></details>
-      <details class="reveal"><summary>名前や写真がこのページに載りますか？</summary><p>このページに名簿や連絡先は載せません。写真は、顔が分からない遠景のものだけを使っています。選手名鑑や無絃塾通信に載せる範囲は、ご本人に選んでいただきます。</p></details>
-      <details class="reveal"><summary>同じ期の友人にも知らせたいです</summary><p>ぜひ、このページのURLを同じ期の方に回してください。右の「LINEで送る」から、そのまま送れます。</p></details>
+      <div class="faq">
+        <p class="faq-cat reveal">参加について</p>
+        <details class="reveal"><summary>会費はいくらですか？</summary><p>会場などの費用が決まりしだい、2027年10月ごろの正式なご案内でお知らせします。</p></details>
+        <details class="reveal"><summary>午後から、または二次会だけの参加もできますか？</summary><p>できます。出欠の回答で「式典・昼食」「開学記念館」「二次会」を分けて伺う予定です。上の「参加のしかた」もご覧ください。</p></details>
+        <details class="reveal"><summary>同期が来るか分からず、一人だと不安です</summary><p>大丈夫です。受付で名札と選手名鑑をお渡しし、期ごとに集まれる時間もつくります。出欠の受付が始まったら、このページで期ごとの参加人数を見られるようにします。</p></details>
+        <details class="reveal"><summary>家族や子ども連れでも参加できますか？</summary><p>歓迎です。出欠の回答でお子さまの食事の有無も伺います。詳しくは正式なご案内でお知らせします。</p></details>
+        <p class="faq-cat reveal">当日について</p>
+        <details class="reveal"><summary>三味線は持っていったほうがいいですか？</summary><p>全員で弾く時間をつくる予定です。弾く方はぜひお持ちください。楽器の貸出については、決まりしだいお知らせします。</p></details>
+        <details class="reveal"><summary>服装は決まっていますか？</summary><p>決まりはありません。歩きやすい靴と上着がおすすめです（夜は冷えます）。開学記念館では靴を脱ぐ場面があります。</p></details>
+        <details class="reveal"><summary>遅れて着いても大丈夫ですか？</summary><p>大丈夫です。午前の会場で受付を済ませるか、13:15以降は開学記念館へ直接お越しください。</p></details>
+        <details class="reveal"><summary>二次会はどこでやりますか？</summary><p>場所と時間は調整中です。決まりしだい、このページでお知らせします。</p></details>
+        <p class="faq-cat reveal">交通・宿</p>
+        <details class="reveal"><summary>車で行けますか？</summary><p>入構の受付で臨時駐車証が必要です（日曜は案内センターが閉まっています）。二次会で飲む方は、電車とバスでお越しください。</p></details>
+        <details class="reveal"><summary>泊まるところはありますか？</summary><p>翌20日（春分の日の予定）を含む三連休の中日です。つくば駅のまわりのホテルは、早めの予約がおすすめです。<span id="faqHotels" hidden>ホテルの一覧は<a href="#stay">「会場とアクセス」の下</a>にあります。</span></p></details>
+      </div>
+      <aside class="share reveal">
+        <p class="share-k">同じ期の人に回そう</p>
+        <p class="share-t">このページを<br>LINEで送る</p>
+        <a class="btn btn-line" id="shareLine" href="#" target="_blank" rel="noopener">LINEで送る</a>
+        <button class="btn btn-copy" id="copyMsg" type="button">誘う文をコピー</button>
+        <p class="share-small" id="copyNote">まだこのページを知らない同期に、ぜひ。</p>
+      </aside>
     </div>
-    <aside class="share reveal">
-      <p class="share-k">同じ期の人に回そう</p>
-      <p class="share-t">このページを<br>LINEで送る</p>
-      <a class="btn btn-line" id="shareLine" href="#" target="_blank" rel="noopener">LINEで送る</a>
-      <button class="btn btn-copy" id="copyUrl" type="button">URLをコピー</button>
-      <p class="share-small" id="copyMsg"></p>
-    </aside>
+  </section>
+
+  <!-- 16 関連リンク -->
+  <section class="wrap sec-tight" id="related">
+    <div class="related-box reveal">
+      <h2 class="news-h">関連リンク</h2>
+      <div class="related" id="relatedList"></div>
+    </div>
+  </section>
+
+  <!-- 17 撮影と問い合わせ -->
+  <section class="wrap sec-tight" id="contact">
+    <div class="contact reveal">
+      <div><b>写真について</b><p>このページの写真は、顔が分からない遠景だけを使っています。当日の写真は、参加者だけが見られるアルバムで共有する予定です。SNSに載せるときは、写っている人の了承をお願いします。</p></div>
+      <div><b>お問い合わせ</b><p>無絃塾同窓会実行委員会。第一報のメールにご返信ください。</p><p class="contact-form" id="contactForm" hidden></p></div>
     </div>
   </section>
 </main>
 
 <footer class="foot">
   <div class="wrap">
-    <p class="foot-brand">第5回 無絃塾同窓会</p>
+    <p class="foot-big">また、<br class="sp">みんなで弾こう。</p>
+    <p class="foot-brand">第5回 無絃塾同窓会　2028.3.19 SUN</p>
     <p>主催：無絃塾同窓会実行委員会（筑波大学 津軽三味線倶楽部「無絃塾」OB・OG）</p>
-    <p class="foot-small">このページは、準備の進み具合に合わせて更新します。最終更新：<span id="updated">2026年11月12日</span></p>
+    <p class="foot-small">このページは、準備の進み具合に合わせて更新します。最終更新：<span id="updated"></span></p>
   </div>
 </footer>
 
-<a class="float-cta" href="https://docs.google.com/forms/d/1eshTjy1dYRltrB22LF-FAKIfDrplhGG8FOQzufZtlfY/viewform" target="_blank" rel="noopener">✍️ やってほしいことを送る</a>
+<a class="float-cta" id="floatCta" href="#schedule">これからの予定を見る</a>
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>

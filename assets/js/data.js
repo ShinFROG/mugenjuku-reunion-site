@@ -8,18 +8,18 @@ window.SITE = {
 
   // フォーム。url を入れておくと、受付期間（from〜to）のあいだ、ページのボタンが自動でそのフォームにつながります。
   forms: {
-    ideas: { name: "「やってほしいこと」募集", url: "https://docs.google.com/forms/d/1eshTjy1dYRltrB22LF-FAKIfDrplhGG8FOQzufZtlfY/viewform", from: "2027-01-08", to: "2027-03-19" },
+    ideas: { name: "「やってほしいこと」募集", url: "https://docs.google.com/forms/d/e/1FAIpQLSfuJ7CBaJamvw72LrWk4refsydXXX2jkn7hqdYQ8x5TvAtUEg/viewform", from: "2026-11-12", to: "2027-03-19" },
     rsvp: { name: "出欠の回答", url: "", from: "2027-10-01", to: "2028-02-18" }, // ④ 出欠フォーム（2027年10月ごろに作る）
     contact: { name: "お問い合わせ", url: "" } // 作ったら入れる（いまは第一報のメールへの返信で受けている）
   },
 
   // 時期ごとにトップの表示とボタンを変える
   phases: [
-    { from: "2000-01-01", to: "2027-01-07", key: "soon", label: "準備中",
+    { from: "2000-01-01", to: "2026-11-11", key: "soon", label: "準備中",
       lead: "2027年1月から「やってほしいこと」を募集します。",
       cta: { text: "「やってほしいこと」募集について", short: "やってほしいこと募集", href: "#ideas" },
       band: ["2028.3.19 SUN", "第5回 無絃塾同窓会", "筑波大学 未来社会デザイン棟・開学記念館", "2027年1月から「やってほしいこと」を募集"] },
-    { from: "2027-01-08", to: "2027-03-19", key: "ideas", label: "募集中",
+    { from: "2026-11-12", to: "2027-03-19", key: "ideas", label: "募集中",
       lead: "同窓会で「やってほしいこと」を募集しています。締切は2027年3月19日（金）です。",
       cta: { text: "「やってほしいこと」を送る", short: "やってほしいことを送る", form: "ideas", fallback: "#schedule" },
       band: ["「やってほしいこと」募集中", "締切 2027.3.19（金）", "3分で答えられます", "2028.3.19 SUN 筑波大学"] },
@@ -47,6 +47,7 @@ window.SITE = {
 
   // お知らせ（新しい順。30日以内のものに NEW が付く）
   news: [
+    { date: "2026-11-12", text: "「やってほしいこと」の募集を始めました。締切は2027年3月19日（金）です。" },
     { date: "2026-11-12", text: "同窓会のページを開きました（準備中の版です）。" }
   ],
 
@@ -165,7 +166,6 @@ window.SITE = {
     hero: { id: "ZBcpuOby0Jc", title: "2026新歓PV" },
     picks: [
       { id: "qCIzh4u_p8s", title: "学園祭ダイジェスト④", date: "2026年2月公開" },
-      { id: "ZBcpuOby0Jc", title: "2026新歓PV", date: "2026年4月公開" },
       { id: "SLACJcNoxSg", title: "無絃塾の稽古風景", date: "2026年4月公開" },
       { id: "0nGWPyitgMk", title: "無絃塾あるある！", date: "2026年5月公開" }
     ]

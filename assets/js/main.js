@@ -24,6 +24,8 @@
   function jpDateW(s) { return jpDate(s) + "（" + WD[new Date(utcDay(s)).getUTCDay()] + "）"; }
   function mdJP(s) { var a = s.split("-"); return +a[1] + "月" + +a[2] + "日"; }
   function ymJP(s) { var a = s.split("-"); return +a[0] + "年" + +a[1] + "月"; }
+  // 締切が今日と違う年なら年も付ける
+  function dueJP(s) { return s.slice(0, 4) === TODAY.slice(0, 4) ? mdJP(s) : jpDate(s); }
 
   // ---------- 日本時間の今日と今の時刻 ----------
   function jstNow() {
@@ -121,12 +123,12 @@
     var st = formState(f), late = ["rsvp", "final", "today", "after"].indexOf(phase.key) >= 0;
     if (late) { sec.hidden = true; return; }
     var state = $("#ideasState"), lead = $("#ideasLead"), period = $("#ideasPeriod"), act = $("#ideasAction");
-    if (period) period.textContent = ymJP(f.from) + "〜" + mdJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）";
+    if (period) period.textContent = ymJP(f.from) + "〜" + dueJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）";
     if (st === "before") {
       if (state) state.textContent = ymJP(f.from) + "から募集します";
       if (act) act.innerHTML = '<span class="btn ideas-btn is-off">受付は' + ymJP(f.from) + "から</span>";
     } else if (st === "open") {
-      if (state) state.textContent = "募集中（" + mdJP(f.to) + "まで）";
+      if (state) state.textContent = "募集中（" + dueJP(f.to) + "まで）";
       if (act) act.innerHTML = '<a class="btn btn-white ideas-btn" href="' + esc(f.url) + '" target="_blank" rel="noopener">「やってほしいこと」を送る</a>';
     } else if (st === "after") {
       if (state) state.textContent = "募集は終わりました";
@@ -186,8 +188,8 @@
       h = "<b>出欠の受付は締め切りました</b><span>たくさんのご回答、ありがとうございました。</span>";
     } else if (rsvp) {
       h = "<b>出欠の受付は" + ymJP(rsvp.from) + "ごろから</b><span>締切は" + jpDateW(rsvp.to) + "の予定です。</span>";
-      if (si === "before") h += "<span>その前に、" + ymJP(ideas.from) + "から" + mdJP(ideas.to) + "まで「やってほしいこと」を募集します。</span>";
-      else if (si === "open") h += "<span>いま「やってほしいこと」を募集しています（" + mdJP(ideas.to) + "まで）。</span>" + formButton(ideas.url, "「やってほしいこと」を送る");
+      if (si === "before") h += "<span>その前に、" + ymJP(ideas.from) + "から" + dueJP(ideas.to) + "まで「やってほしいこと」を募集します。</span>";
+      else if (si === "open") h += "<span>いま「やってほしいこと」を募集しています（" + dueJP(ideas.to) + "まで）。</span>" + formButton(ideas.url, "「やってほしいこと」を送る");
       else if (si === "after") h += "<span>「やってほしいこと」の募集は終わりました。ありがとうございました。</span>";
     }
     if (h) dd.innerHTML = h;
@@ -352,37 +354,43 @@
   }
 
   // ---------- 無絃塾のYouTube ----------
-  function heroVideo() {
-    var Y = S.youtube || {}, V = Y.hero, wrap = $("#heroVideo"), hero = $(".hero");
-    var yt = $("#heroYt");
+  // トップの写真の下で2026新歓PVを流す。見える位置に来たら、まず音ありで流す。
+  // ブラウザに止められたら音なしで流し、最初のタップで音を出す
+  function pvVideo() {
+    var Y = S.youtube || {}, V = Y.hero, holder = $("#pvPlayer"), sec = $("#pv");
+    var yt = $("#pvYt");
     if (yt && V && V.id) yt.href = "https://www.youtube.com/watch?v=" + V.id;
-    if (!V || !V.id || !wrap || !hero || still) return;
-    var c = navigator.connection;
-    if (c && (c.saveData || /2g/.test(c.effectiveType || ""))) return;
-    var ctl = $("#heroVctl"), btn = $("#heroSound"), player = null, muted = true, playing = false;
-    function size() {
-      var f = wrap.querySelector("iframe"); if (!f) return;
-      var w = hero.clientWidth, hh = hero.clientHeight;
-      // 少し大きめにして、YouTubeの題名とロゴを外に出す
-      f.style.width = Math.ceil(Math.max(w, hh * 16 / 9) * 1.2) + "px";
-      f.style.height = Math.ceil(Math.max(hh, w * 9 / 16) * 1.2) + "px";
+    if (!V || !V.id || !holder || !sec) return;
+    var btn = $("#pvSound"), player = null, ready = false, started = false, playing = false;
+    var muted = false, userMuted = false, userPaused = false, inView = false, auto = !still;
+    function setBtn() { if (btn) { btn.hidden = !muted; btn.classList.toggle("pulse", muted); } }
+    function syncMute() { if (player && player.isMuted) { muted = player.isMuted(); setBtn(); } }
+    function soundOn() {
+      if (!player || !player.unMute) return;
+      player.unMute(); player.setVolume(80); player.playVideo();
+      muted = false; setBtn();
+      setTimeout(syncMute, 600);
+    }
+    function tryStart() {
+      if (!auto || !ready || !inView || started) return;
+      started = true;
+      player.unMute(); player.setVolume(80); player.playVideo();
+      setTimeout(function () {
+        if (!playing) { player.mute(); player.playVideo(); }
+        syncMute();
+      }, 1500);
     }
     window.onYouTubeIframeAPIReady = function () {
-      player = new YT.Player("heroPlayer", {
+      player = new YT.Player("pvPlayer", {
         host: "https://www.youtube-nocookie.com",
         videoId: V.id,
-        playerVars: { autoplay: 1, mute: 1, controls: 0, loop: 1, playlist: V.id, playsinline: 1, rel: 0, disablekb: 1, iv_load_policy: 3, modestbranding: 1 },
+        playerVars: { autoplay: 0, mute: 0, controls: 1, loop: 1, playlist: V.id, playsinline: 1, rel: 0, iv_load_policy: 3, modestbranding: 1 },
         events: {
-          onReady: function (e) { size(); e.target.mute(); e.target.playVideo(); },
+          onReady: function () { ready = true; tryStart(); },
           onStateChange: function (e) {
-            if (e.data === 1 && !playing) {
-              playing = true;
-              wrap.classList.add("on");
-              hero.classList.add("has-video");
-              if (ctl) ctl.hidden = false;
-            }
-          },
-          onError: function () { wrap.remove(); }
+            if (e.data === 1) { playing = true; userPaused = false; syncMute(); }
+            if (e.data === 2 && inView && playing) userPaused = true;
+          }
         }
       });
     };
@@ -390,20 +398,23 @@
     s.src = "https://www.youtube.com/iframe_api";
     s.async = true;
     doc.head.appendChild(s);
-    addEventListener("resize", size);
-    if (btn) btn.addEventListener("click", function () {
-      if (!player || !player.unMute) return;
-      if (muted) { player.unMute(); player.setVolume(80); player.playVideo(); } else { player.mute(); }
-      muted = !muted;
-      btn.textContent = muted ? "音を出す" : "音を消す";
-      btn.setAttribute("aria-pressed", muted ? "false" : "true");
-    });
-    // トップが見えていないときは止めておく
+    if (btn) btn.addEventListener("click", function () { userMuted = false; soundOn(); });
+    function firstGesture(e) {
+      if (e.target && e.target.closest && e.target.closest("#pvSound")) return;
+      if (!player || !playing || userMuted || !inView) return;
+      doc.removeEventListener("click", firstGesture, true);
+      doc.removeEventListener("keydown", firstGesture, true);
+      if (muted) soundOn();
+    }
+    doc.addEventListener("click", firstGesture, true);
+    doc.addEventListener("keydown", firstGesture, true);
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) {
+        inView = es[0].isIntersecting;
+        if (!started) { tryStart(); return; }
         if (!player || !player.playVideo || !playing) return;
-        if (es[0].isIntersecting) player.playVideo(); else player.pauseVideo();
-      }).observe(hero);
+        if (inView) { if (!userPaused) player.playVideo(); } else player.pauseVideo();
+      }, { threshold: 0.35 }).observe(sec);
     }
   }
   function buildVideos() {
@@ -494,7 +505,7 @@
   }
   function inviteText() {
     var lines = ["【第5回 無絃塾同窓会】", "2028年3月19日（日）、筑波大学（未来社会デザイン棟・開学記念館）で開きます。"];
-    if (phase.key === "ideas" && forms.ideas) lines.push("いま「やってほしいこと」を募集しています（" + mdJP(forms.ideas.to) + "まで）。");
+    if (phase.key === "ideas" && forms.ideas) lines.push("いま「やってほしいこと」を募集しています（" + dueJP(forms.ideas.to) + "まで）。");
     if (phase.key === "rsvp" && forms.rsvp) lines.push("出欠を受付中です（" + jpDate(forms.rsvp.to) + "まで）。");
     lines.push("くわしくはこちら：" + S.url);
     return lines.join("\n");
@@ -658,7 +669,7 @@
   nav();
   floatCta();
   petals();
-  heroVideo();
+  pvVideo();
   reveal();
   opening();
   var up = $("#updated"); if (up && S.updated) up.textContent = jpDate(S.updated);

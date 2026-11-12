@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261112b">
+<link rel="stylesheet" href="assets/css/style.css?v=20261112d">
 </head>
 <body>
 
@@ -63,7 +63,6 @@
   <!-- 01 トップ -->
   <section class="hero" aria-label="第5回 無絃塾同窓会">
     <div class="hero-photo" role="img" aria-label="桜の舞台での卒業公演（遠景）"></div>
-    <div class="hero-video" id="heroVideo" aria-hidden="true"><div id="heroPlayer"></div></div>
     <div class="hero-shade"></div>
     <div class="petals" id="petals" aria-hidden="true"></div>
     <div class="hero-badge" id="heroBadge"><small>当日まで</small><b id="heroDays">493</b><small>日</small></div>
@@ -79,16 +78,27 @@
         <a class="btn btn-glass" href="#access">アクセスとバスの時刻</a>
       </div>
     </div>
-    <div class="hero-vctl" id="heroVctl" hidden>
-      <span class="hero-vcap">いまの無絃塾：2026新歓PV</span>
-      <button type="button" id="heroSound" aria-pressed="false">音を出す</button>
-      <a id="heroYt" href="#" target="_blank" rel="noopener">YouTubeで見る ↗</a>
-    </div>
     <svg class="hero-strings" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 18 L1200 18"/><path d="M0 30 L1200 30"/><path d="M0 42 L1200 42"/></svg>
   </section>
 
   <!-- 02 流れる帯 -->
   <div class="band" aria-hidden="true"><div class="band-track" id="band"></div></div>
+
+  <!-- 02a いまの無絃塾（2026新歓PV） -->
+  <section class="wrap" id="pv">
+    <div class="pv reveal">
+      <div class="pv-frame"><div id="pvPlayer"></div></div>
+      <div class="pv-side">
+        <p class="kicker">MUGENJUKU NOW</p>
+        <h2 class="pv-h">いまの無絃塾<br>2026新歓PV</h2>
+        <p class="pv-lead">現役生がつくった新歓PVです。音が出ます。</p>
+        <div class="pv-btns">
+          <button type="button" class="btn btn-small btn-red" id="pvSound" hidden>🔊 音を出す</button>
+          <a class="btn btn-small btn-line-o" id="pvYt" href="#" target="_blank" rel="noopener">YouTubeで見る ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- 02b 「やってほしいこと」募集（いまの主題） -->
   <section class="wrap sec-tight" id="ideas">
@@ -202,7 +212,7 @@
   <section class="wrap sec" id="videos">
     <p class="kicker reveal">MUGENJUKU NOW</p>
     <h2 class="h2 reveal">いまの無絃塾を動画で</h2>
-    <p class="lead reveal">現役生がYouTubeで発信しています。トップで流れているのは、2026年の新歓PVです。</p>
+    <p class="lead reveal">上の新歓PVのほかにも、現役生がYouTubeで発信しています。</p>
     <div class="vids" id="vids"></div>
     <p class="vids-more reveal"><a class="btn btn-small btn-line-o" id="ytChannel" href="#" target="_blank" rel="noopener">YouTubeチャンネルを見る ↗</a></p>
   </section>
@@ -389,7 +399,7 @@
     <p class="kicker reveal">SCHEDULE</p>
     <h2 class="h2 reveal">これからの予定</h2>
     <ol class="road" id="road">
-      <li data-from="2027-01-08" data-to="2027-03-19" data-form="ideas"><time>2027年1月〜3月19日</time><b>「やってほしいこと」募集</b><p>3分で答えられるフォームです</p></li>
+      <li data-from="2026-11-12" data-to="2027-03-19" data-form="ideas"><time>2026年11月〜2027年3月19日</time><b>「やってほしいこと」募集</b><p>3分で答えられるフォームです</p></li>
       <li data-from="2027-10-01" data-to="2028-02-18" data-form="rsvp"><time>2027年10月ごろ</time><b>正式なご案内と出欠の受付</b><p>無絃塾通信も月1回お届けします</p></li>
       <li data-from="2028-02-18" data-to="2028-02-18"><time>2028年2月18日（金）</time><b>出欠の締切</b></li>
       <li data-from="2028-03-19" data-to="2028-03-19"><time>2028年3月19日（日）</time><b>同窓会当日</b></li>
@@ -454,7 +464,7 @@
 
 <a class="float-cta" id="floatCta" href="#schedule">これからの予定を見る</a>
 
-<script src="assets/js/data.js?v=20261112b"></script>
-<script src="assets/js/main.js?v=20261112b"></script>
+<script src="assets/js/data.js?v=20261112d"></script>
+<script src="assets/js/main.js?v=20261112d"></script>
 </body>
 </html>

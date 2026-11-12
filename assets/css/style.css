@@ -67,7 +67,7 @@ section{position:relative}
 .menu[aria-expanded="true"] span:last-child{top:21px;transform:rotate(-45deg)}
 
 /* トップ */
-.hero{position:relative;margin:18px auto 0;width:min(1200px,100% - 32px);height:min(80vh,740px);min-height:560px;border-radius:36px;overflow:hidden;background:#111;isolation:isolate}
+.hero{position:relative;margin:18px auto 0;width:min(1200px,100% - 32px);height:min(calc(var(--vh,1vh)*80),740px);min-height:560px;border-radius:36px;overflow:hidden;background:#111;isolation:isolate}
 .hero-photo{position:absolute;inset:-4%;background:url(../img/hero_sakura.jpg) center 62%/cover;filter:blur(2.5px) saturate(1.08);animation:kenburns 22s ease-in-out infinite alternate;z-index:-3}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08) translate(-1.5%,-1%)}}
 .hero-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.66) 100%),linear-gradient(90deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 62%)}
@@ -411,7 +411,7 @@ section{position:relative}
 @media (max-width:640px){
   .sp{display:inline}
   .sec{margin-top:84px}
-  .hero{margin-top:10px;border-radius:26px;height:min(80vh,660px);min-height:540px}
+  .hero{margin-top:10px;border-radius:26px;height:min(calc(var(--vh,1vh)*80),660px);min-height:540px}
   .hero h1{font-size:clamp(32px,10.4vw,46px)}
   .hero-sub .sep{display:none}
   .hero-btns .btn{width:100%}

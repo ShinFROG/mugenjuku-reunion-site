@@ -4,6 +4,16 @@
   "use strict";
   var S = window.SITE || {};
   var doc = document, root = doc.documentElement;
+
+  // 画面の高さ（--vh）は、開いたときの値で固定する。
+  // LINEなどのアプリ内ブラウザは、スクロールでツールバーが縮むたびに画面の高さが変わり、
+  // そのたびにトップの写真の高さ（80vh）が変わって、中の文字がぐっと下にずれていたため。横幅が変わったとき（向きを変えたとき）だけ測り直す
+  (function lockVh() {
+    var w = innerWidth;
+    function set() { root.style.setProperty("--vh", innerHeight / 100 + "px"); }
+    set();
+    addEventListener("resize", function () { if (innerWidth !== w) { w = innerWidth; set(); } });
+  })();
   var params = new URLSearchParams(location.search);
 
   function $(s, r) { return (r || doc).querySelector(s); }

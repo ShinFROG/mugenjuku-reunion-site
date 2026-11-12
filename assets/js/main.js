@@ -135,7 +135,7 @@
     var st = formState(f), late = ["rsvp", "final", "today", "after"].indexOf(phase.key) >= 0;
     if (late) { sec.hidden = true; return; }
     var state = $("#ideasState"), lead = $("#ideasLead"), period = $("#ideasPeriod"), act = $("#ideasAction");
-    if (period) period.innerHTML = '<span class="nw">' + ymJP(f.from) + '〜</span><span class="nw">' + dueJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）</span>";
+    if (period) period.innerHTML = '<span class="nw">' + ymJP(f.from) + '〜</span><wbr><span class="nw">' + dueJP(f.to) + "（" + WD[new Date(utcDay(f.to)).getUTCDay()] + "）</span>";
     if (st === "before") {
       if (state) state.textContent = ymJP(f.from) + "から募集します";
       if (act) act.innerHTML = '<span class="btn ideas-btn is-off">受付は' + ymJP(f.from) + "から</span>";

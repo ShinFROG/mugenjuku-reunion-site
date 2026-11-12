@@ -65,21 +65,66 @@ const proc = new HTMLProcessor(phraser, { className: "bx", separator: document.c
 // ブラウザがもともと改行してしまう所を止める
 // ・「受付 9:50」「北千住 8:28」「16:00 終了予定」「6番のりば 発」の空白 → 改行しない空白（U+00A0）
 // ・「」を」「）の」のような、かっこ閉じのあとの助詞、「19日（金）」の曜日の前 → 改行しない印（U+2060）
+// ・iPhoneのSafariとLINEは、keep-all のとき、かっこの前後・記号のあとで改行してしまい、改行しない印（U+2060）も効かない。
+//   そこで「（2」「）で」「19日（金）」「8:28」「2028.3.19」「1,260」「6〜8」「2-1」「OB・OG」を <nobr> で包んで、途中で切れないようにする
+//   （<span> だと「.facts dd span」などの見た目が付いてしまうので、どの見た目にも当たらない <nobr> を使う）
 const SKIP = "script,style,noscript,textarea,input,select,option,code,pre";
+const OPENS = "（「『【〔［｛〈《";
+const NUM = new RegExp([
+  "\\d{1,2}日（[月火水木金土日](?:・祝)?）",
+  "\\d{1,2}:\\d{2}",
+  "\\d{4}\\.\\d{1,2}\\.\\d{1,2}",
+  "\\d{1,3}(?:,\\d{3})+",
+  "\\d+[〜~\\-－]\\d+",
+  "[A-Za-z0-9]+・[A-Za-z0-9]+",
+  "[" + OPENS + "]\\u2060?[^\\s\\u2060]",
+  "[）」』】〕]\\u2060?[\\u3041-\\u309F]",
+].join("|"), "g");
 function glue(root) {
   const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const nodes = [];
   let n;
   while ((n = tw.nextNode())) {
-    const t = n.data;
-    if (n.parentElement && n.parentElement.closest(SKIP)) continue;
-    const u = t
+    if (!(n.parentElement && n.parentElement.closest(SKIP))) nodes.push(n);
+  }
+  let prev = null;
+  for (const node of nodes) {
+    const t = node.data;
+    let u = t
       .replace(/(^|[\s／（(、。：])([^\s／（(、。：]{1,3}) (\d{1,2}:\d{2})/g, "$1$2 $3") // 3字までの短い語だけ（長い地名は狭い表で時刻の途中が切れるため）
       .replace(/(\d{1,2}:\d{2}) (?=[ぁ-ヿ一-鿿])/g, "$1 ")
       .replace(/(\S) ([発着])(?=$|[\s（(／)）、。「])/g, "$1 $2")
       .replace(/([）」』】〕])(?=[ぁ-ゟ])/g, "$1⁠")
-      .replace(/([0-9０-９]日)(?=（[月火水木金土日](?:・祝)?）)/g, "$1⁠");
-    if (u !== t) n.data = u;
+      .replace(/([0-9０-９]日)(?=（[月火水木金土日](?:・祝)?）)/g, "$1⁠")
+      .replace(new RegExp("([" + OPENS + "])(?=[^\\u2060])", "g"), "$1⁠");
+    if (OPENS.indexOf(u.slice(-1)) >= 0) u += "⁠";
+    // 前のテキストが「）」で終わり、このテキストがひらがなで始まるとき（<b>…）</b>でも のような所）
+    if (prev && /[）」』】〕]$/.test(prev.data) && /^[ぁ-ゟ]/.test(u)) prev.data += "⁠";
+    if (u !== t) node.data = u;
+    prev = node;
   }
+  for (const node of nodes) wrapNumbers(node);
+}
+// 中の文字が分かれると見た目が変わる入れ物（ボタンなどの flex・grid）か
+function isFlexOrGrid(el) { return !!el && /flex|grid/.test(getComputedStyle(el).display); }
+function wrapNumbers(node) {
+  const pe = node.parentElement;
+  if (!pe || pe.closest(".nw,nobr,.band") || isFlexOrGrid(pe)) return;
+  const t = node.data;
+  NUM.lastIndex = 0;
+  if (!NUM.test(t)) return;
+  NUM.lastIndex = 0;
+  const frag = document.createDocumentFragment();
+  let last = 0, m;
+  while ((m = NUM.exec(t))) {
+    if (m.index > last) frag.appendChild(document.createTextNode(t.slice(last, m.index)));
+    const s = document.createElement("nobr");
+    s.textContent = m[0];
+    frag.appendChild(s);
+    last = m.index + m[0].length;
+  }
+  if (last < t.length) frag.appendChild(document.createTextNode(t.slice(last)));
+  node.replaceWith(frag);
 }
 
 // 切れ目の候補が1つもない段落（短い見出しなど）にも .bx を付けて、字の途中で改行しないようにする
@@ -99,6 +144,11 @@ function markBlocks(root) {
 function apply(el) {
   glue(el);
   proc.applyToElement(el);
+  // ボタンなど flex・grid の中に直接ある文字は、<wbr> で分けると字のあいだにすき間が出るので、入れたものを外す
+  for (const w of el.querySelectorAll("wbr")) {
+    const p = w.parentElement;
+    if (isFlexOrGrid(p)) { w.remove(); p.normalize(); }
+  }
   markBlocks(el);
 }
 

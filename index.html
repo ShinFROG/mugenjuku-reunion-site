@@ -15,7 +15,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20261112m">
+<link rel="stylesheet" href="assets/css/style.css?v=20261112n">
+<link rel="modulepreload" href="assets/js/vendor/budoux-0.10.1/html_processor.js">
+<link rel="modulepreload" href="assets/js/vendor/budoux-0.10.1/parser.js">
+<link rel="modulepreload" href="assets/js/vendor/budoux-0.10.1/dom.js">
+<link rel="modulepreload" href="assets/js/vendor/budoux-0.10.1/data/models/ja.js">
 </head>
 <body>
 
@@ -51,7 +55,6 @@
     <nav class="links" id="links">
       <a href="#about">開催概要</a>
       <a href="#program">当日の流れ</a>
-      <a href="#play">弾く・踊る</a>
       <a href="#access">アクセス</a>
       <a href="#faq">Q&amp;A</a>
     </nav>
@@ -129,17 +132,17 @@
     <h2 class="h2 reveal">開催概要</h2>
     <div class="about">
       <dl class="facts reveal">
-        <div><dt>日時</dt><dd><b class="fact-date">2028年3月19日（日）</b><span>受付 9:50／開場 10:00／16:00 終了予定。二次会は17:30ごろから（場所は調整中）</span><em>翌20日（月）は春分の日の予定で、三連休の中日です。</em></dd></div>
-        <div><dt>会場</dt><dd><b>筑波大学 未来社会デザイン棟（午前）</b><b>開学記念館（午後）</b><span>2つの会場は約450m、歩いて6〜8分です。二次会の場所は調整中です。</span></dd></div>
-        <div><dt>対象</dt><dd><b>無絃塾のOB・OGのみなさん</b><span>現役生と先生方もご一緒します。ご家族連れもどうぞ（詳しくは正式なご案内で）。</span></dd></div>
+        <div><dt>日時</dt><dd><b class="fact-date">2028年3月19日（日）</b><span>受付 9:50／開場 10:00／16:00 終了予定。<br>二次会は17:30ごろから（場所は調整中）</span><em>翌20日（月）は春分の日で、三連休の中日です。</em></dd></div>
+        <div><dt>会場</dt><dd><b>筑波大学 未来社会デザイン棟（午前）</b><b>開学記念館（午後）</b><span>2つの会場は約450m、歩いて6〜8分です。<br>二次会の場所は調整中です。</span></dd></div>
+        <div><dt>対象</dt><dd><b>無絃塾のOB・OGのみなさん</b><span>現役生と先生方もご一緒します。<br>ご家族連れもどうぞ（詳しくは正式なご案内で）。</span></dd></div>
         <div><dt>会費</dt><dd><b>未定</b><span>決まりしだい、2027年10月ごろの正式なご案内でお知らせします。</span></dd></div>
         <div><dt>申込</dt><dd id="factApply"><b>出欠の受付は2027年10月ごろから</b><span>締切は2028年2月18日（金）の予定です。</span></dd></div>
-        <div><dt>連絡先</dt><dd><b>無絃塾同窓会実行委員会</b><span>ご連絡は、ページの下の<a href="#contact">お問い合わせフォーム</a>からどうぞ。第一報のメールへのご返信でも受け付けます。</span></dd></div>
+        <div><dt>連絡先</dt><dd><b>無絃塾同窓会実行委員会</b><span>ご連絡は、ページの下の<a href="#contact">お問い合わせフォーム</a>からどうぞ。<br>第一報のメールへのご返信でも受け付けます。</span></dd></div>
       </dl>
       <aside class="cal reveal">
         <div class="cal-head"><b>2028</b><span>MARCH</span></div>
         <div class="cal-grid" id="calGrid"></div>
-        <div class="cal-note"><span class="cal-key"><span class="cal-dot"></span>3月19日（日） 当日</span><span class="cal-key"><span class="cal-ring"></span>20日（月） 春分の日（予定）</span></div>
+        <div class="cal-note"><span class="cal-key"><span class="cal-dot"></span>3月19日（日） 当日</span><span class="cal-key"><span class="cal-ring"></span>20日（月） 春分の日</span></div>
         <div class="cal-btns">
           <a class="btn btn-small btn-ink" id="gcalBtn" href="#" target="_blank" rel="noopener">Googleカレンダーに追加</a>
           <a class="btn btn-small btn-line-o" href="assets/mugenjuku5.ics" download>iPhone・Outlookに追加（.ics）</a>
@@ -231,34 +234,6 @@
     </div>
   </section>
 
-  <!-- 07 全員で弾く・踊る -->
-  <section class="play" id="play">
-    <div class="wrap">
-      <p class="kicker kicker-light reveal">PLAY TOGETHER</p>
-      <h2 class="h2 reveal">全員で弾く・踊る</h2>
-      <p class="lead lead-light reveal">記念演奏の最後は、OBOG・現役生・先生方みんなで。弾いても、踊っても、聴いているだけでも大丈夫です。</p>
-      <div class="roles reveal">
-        <div class="role"><i>🪕</i><b>弾く</b><p>津軽じょんがら節を一緒に</p></div>
-        <div class="role"><i>💃</i><b>踊る</b><p>踊りの輪に入る</p></div>
-        <div class="role"><i>👏</i><b>聴く</b><p>客席で楽しむ</p></div>
-        <div class="role"><i>🍻</i><b>二次会から</b><p>夜から合流（場所は調整中）</p></div>
-      </div>
-      <div class="bring reveal">
-        <b>弾く人の持ち物</b>
-        <ul><li>三味線</li><li>撥</li><li>駒</li><li>指かけ</li><li>チューナー</li><li>譜面</li></ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 07b いまの無絃塾（動画） -->
-  <section class="wrap sec" id="videos">
-    <p class="kicker reveal">MUGENJUKU NOW</p>
-    <h2 class="h2 reveal">いまの無絃塾を動画で</h2>
-    <p class="lead reveal">上の新歓PVのほかにも、現役生がYouTubeで発信しています。</p>
-    <div class="vids" id="vids"></div>
-    <p class="vids-more reveal"><a class="btn btn-small btn-line-o" id="ytChannel" href="#" target="_blank" rel="noopener">YouTubeチャンネルを見る ↗</a></p>
-  </section>
-
   <!-- 08 アクセス -->
   <section class="wrap sec" id="access">
     <p class="kicker reveal">ACCESS</p>
@@ -330,7 +305,7 @@
 
     <div class="stay" id="stay" hidden>
       <h3 class="h3 reveal">つくば駅のまわりに泊まる</h3>
-      <p class="lead reveal">翌20日は春分の日（予定）で、三連休の中日です。早めの予約がおすすめです。料金と空室は各ホテルでご確認ください。</p>
+      <p class="lead reveal">翌20日は春分の日で、三連休の中日です。早めの予約がおすすめです。料金と空室は各ホテルでご確認ください。</p>
       <div class="hotels" id="hotels"></div>
       <p class="note-s" id="hotelsSrc"></p>
     </div>
@@ -421,7 +396,7 @@
         <details class="reveal"><summary>二次会はどこでやりますか？</summary><p>場所と時間は調整中です。決まりしだい、このページでお知らせします。</p></details>
         <p class="faq-cat reveal">交通・宿</p>
         <details class="reveal"><summary>車で行けますか？</summary><p>大学の構内への車での来場は、基本的にご遠慮ください。車でお越しの方は、つくば駅の近くの有料駐車場に停めて、バス（つくばセンターから約10分）やタクシーでお越しください。二次会で飲む方は、電車とバスでお越しください。</p></details>
-        <details class="reveal"><summary>泊まるところはありますか？</summary><p>翌20日（春分の日の予定）を含む三連休の中日です。つくば駅のまわりのホテルは、早めの予約がおすすめです。<span id="faqHotels" hidden>ホテルの一覧は<a href="#stay">「会場とアクセス」の下</a>にあります。</span></p></details>
+        <details class="reveal"><summary>泊まるところはありますか？</summary><p>翌20日（春分の日）を含む三連休の中日です。つくば駅のまわりのホテルは、早めの予約がおすすめです。<span id="faqHotels" hidden>ホテルの一覧は<a href="#stay">「会場とアクセス」の下</a>にあります。</span></p></details>
       </div>
       <aside class="share reveal">
         <p class="share-k">同じ期の人に回そう</p>
@@ -461,7 +436,8 @@
 
 <a class="float-cta" id="floatCta" href="#schedule">これからの予定を見る</a>
 
-<script src="assets/js/data.js?v=20261112m"></script>
-<script src="assets/js/main.js?v=20261112m"></script>
+<script src="assets/js/data.js?v=20261112n"></script>
+<script src="assets/js/main.js?v=20261112n"></script>
+<script type="module" src="assets/js/linebreak.js?v=20261112n"></script>
 </body>
 </html>

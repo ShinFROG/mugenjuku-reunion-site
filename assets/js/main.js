@@ -171,7 +171,7 @@
     }
     g.innerHTML = h;
     g.setAttribute("role", "img");
-    g.setAttribute("aria-label", y + "年" + m + "月のカレンダー。" + m + "月" + day + "日（日）が同窓会の当日、翌日は春分の日（予定）。");
+    g.setAttribute("aria-label", y + "年" + m + "月のカレンダー。" + m + "月" + day + "日（日）が同窓会の当日、翌日は春分の日。");
   }
   function utcStamp(date, time) {
     var a = date.split("-"), t = time.split(":");
@@ -405,31 +405,6 @@
       if (state === 1) player.pauseVideo(); else play();
     });
   }
-  function buildVideos() {
-    var Y = S.youtube || {}, box = $("#vids"), sec = $("#videos");
-    var ch = $("#ytChannel"); if (ch && Y.channel) ch.href = Y.channel;
-    if (!box) return;
-    var P = Y.picks || [];
-    if (!P.length) { if (sec) sec.hidden = true; return; }
-    box.innerHTML = P.map(function (v) {
-      return '<div class="vid reveal"><button type="button" class="vid-frame" data-id="' + esc(v.id) + '" aria-label="' + esc(v.title) + 'を再生">' +
-        '<img src="https://i.ytimg.com/vi/' + esc(v.id) + '/hqdefault.jpg" alt="" loading="lazy"><span class="vid-play" aria-hidden="true"></span></button>' +
-        '<b class="vid-title">' + esc(v.title) + '</b><span class="vid-date">' + esc(v.date) + "</span></div>";
-    }).join("");
-    box.addEventListener("click", function (e) {
-      var b = e.target.closest("button.vid-frame[data-id]"); if (!b) return;
-      var f = doc.createElement("iframe");
-      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(b.getAttribute("data-id")) + "?autoplay=1&rel=0&playsinline=1";
-      f.title = b.getAttribute("aria-label");
-      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-      f.allowFullscreen = true;
-      var div = doc.createElement("div");
-      div.className = "vid-frame";
-      div.appendChild(f);
-      b.replaceWith(div);
-    });
-  }
-
   // ---------- これまでの写真（横スクロールのボタン） ----------
   function galleryButtons() {
     var g = $("#gallery"); if (!g) return;
@@ -635,7 +610,6 @@
   buildTimetable();
   buildWays();
   buildHotels();
-  buildVideos();
   galleryButtons();
   buildLinks();
   buildRoad();

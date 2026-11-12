@@ -163,15 +163,9 @@ window.SITE = {
   ],
   hotelsChecked: "2026年11月",
 
-  // 無絃塾のYouTube。hero はトップで音なしで流す動画、picks は「いまの無絃塾を動画で」に並べる動画（古い順）
+  // 無絃塾のYouTube。hero はトップの写真の下に置く新歓PV（「音ありで再生」で最初から流す）
   youtube: {
-    channel: "https://www.youtube.com/@%E7%AD%91%E6%B3%A2%E5%A4%A7%E5%AD%A6%E7%84%A1%E7%B5%83%E5%A1%BE/videos",
-    hero: { id: "ZBcpuOby0Jc", title: "2026新歓PV" },
-    picks: [
-      { id: "qCIzh4u_p8s", title: "学園祭ダイジェスト④", date: "2026年2月公開" },
-      { id: "SLACJcNoxSg", title: "無絃塾の稽古風景", date: "2026年4月公開" },
-      { id: "0nGWPyitgMk", title: "無絃塾あるある！", date: "2026年5月公開" }
-    ]
+    hero: { id: "ZBcpuOby0Jc", title: "2026新歓PV" }
   },
 
   // 関連リンク（Instagramは2026年11月に公開のプロフィールを確認。YouTubeはそのプロフィールに載っているチャンネル）

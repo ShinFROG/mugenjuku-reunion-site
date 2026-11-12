@@ -210,28 +210,6 @@ section{position:relative}
 .side-card p{font-size:15px;color:var(--sub)}
 .side-small{font-size:13px!important;color:var(--sub)!important;margin-top:6px}
 
-/* 全員で弾く・踊る */
-.play{margin-top:120px;padding:96px 0;background:radial-gradient(circle at 85% 10%,rgba(228,83,63,.35),transparent 40%),linear-gradient(160deg,#1F2A4D 0%,#2B3A67 60%,#20304F 100%);color:#fff;overflow:hidden}
-.play .h2{color:#fff}
-.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}
-.role{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:20px;transition:.25s}
-.role:hover{background:rgba(255,255,255,.14);transform:translateY(-4px)}
-.role i{font-style:normal;font-size:28px}
-.role b{display:block;font-size:18px;margin-top:6px}
-.role p{font-size:14px;color:#DADDEB}
-.kits{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
-.kit{position:relative;background:#fff;color:var(--ink);border-radius:22px;padding:22px 22px 18px;overflow:hidden}
-.kit-no{position:absolute;right:16px;top:8px;font-size:52px;font-weight:700;color:var(--beige);line-height:1}
-.kit h4{font-size:22px;font-weight:700;position:relative}
-.kit ul{list-style:none;margin-top:8px}
-.kit li{font-size:15px;color:var(--sub);padding:3px 0 3px 22px;position:relative}
-.kit li::before{content:"";position:absolute;left:0;top:11px;width:12px;height:2px;background:var(--red)}
-.kit-state{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;background:var(--beige);border-radius:999px;padding:3px 12px;color:var(--sub)}
-.bring{margin-top:26px;background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.35);border-radius:22px;padding:20px 22px}
-.bring b{display:block;font-size:16px}
-.bring ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-.bring li{background:#fff;color:var(--ink);border-radius:999px;padding:5px 14px;font-size:14px;font-weight:700}
-.bring p{font-size:14px;color:#DADDEB}
 
 /* アクセス */
 .ontime{margin-top:28px;background:linear-gradient(135deg,#FFF4EF,#FFFFFF);border:2px solid var(--red);border-radius:var(--r);padding:26px 28px;box-shadow:0 18px 40px rgba(228,83,63,.12)}
@@ -418,8 +396,6 @@ section{position:relative}
   .about,.flow-wrap,.faq-wrap,.mapbox{grid-template-columns:1fr}
   .cal,.flow-side,.share{position:static}
   .can-grid{grid-template-columns:repeat(2,1fr)}
-  .roles{grid-template-columns:repeat(2,1fr)}
-  .kits{grid-template-columns:1fr 1fr}
   .ways{grid-template-columns:repeat(2,1fr)}
   .courses{grid-template-columns:1fr 1fr}
   .prep{grid-template-columns:1fr 1fr}
@@ -545,23 +521,7 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 .hero-vctl button[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
 .hero-vcap{font-size:12px;color:rgba(255,255,255,.88);text-shadow:0 1px 6px rgba(0,0,0,.6)}
 
-/* いまの無絃塾を動画で */
-.vids{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
-.vid{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
-.vid-frame{position:relative;display:block;width:100%;aspect-ratio:16/9;background:#000;border:0;padding:0;cursor:pointer;overflow:hidden}
-.vid-frame img{width:100%;height:100%;object-fit:cover;opacity:.92;transition:opacity .2s,transform .4s}
-.vid-frame:hover img{opacity:1;transform:scale(1.03)}
-.vid-play{position:absolute;left:50%;top:50%;width:58px;height:40px;margin:-20px 0 0 -29px;border-radius:12px;background:var(--red);box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.vid-play::after{content:"";position:absolute;left:23px;top:12px;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent #fff}
-.vid-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vid-title{display:block;font-size:15px;padding:12px 14px 2px;line-height:1.5}
-.vid-date{display:block;font-size:13px;color:var(--sub);padding:0 14px 14px}
-.vids-more{margin-top:18px}
-@media (max-width:980px){.vids{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:640px){
-  .vids{gap:10px}
-  .vid-title{font-size:14px;padding:10px 12px 2px}
-  .vid-date{padding:0 12px 12px}
   .hero-vctl{top:14px;left:14px;right:auto;bottom:auto;justify-content:flex-start}
   .hero-vcap{display:none}
 }
@@ -637,3 +597,6 @@ html.opening-on .hero *,html.opening-on .hero .brush .ln::after{animation-play-s
 
 /* 途中で改行させたくない語（会場名と（予定）、日付） */
 .nw{white-space:nowrap}
+
+/* 日本語の改行を文節の切れ目だけにする（assets/js/linebreak.js が <wbr> と .bx を付ける） */
+.bx{word-break:keep-all;overflow-wrap:anywhere}

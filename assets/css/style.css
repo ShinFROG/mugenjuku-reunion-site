@@ -193,7 +193,7 @@ section{position:relative}
 .ch.v-night .dot{border-color:var(--indigo);background:var(--indigo)} .ch.v-night .tm b{color:var(--indigo)}
 .ch.hi .body{background:var(--teal-l);border-radius:16px;padding:8px 14px;margin:-8px 0 -8px -14px}
 .ch.v-move{padding:6px 0}
-.ch.v-move .body{background:var(--ink);color:#fff;border-radius:999px;padding:10px 18px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.ch.v-move .body{background:var(--ink);color:#fff;border-radius:16px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
 .ch.v-move .body p{color:#C9C6CF}
 .ch.v-move .dot{border-color:var(--yellow)}
 .ch.now .body{outline:2px solid var(--red);border-radius:16px;padding:8px 14px;margin:-8px 0 -8px -14px;background:#fff}
